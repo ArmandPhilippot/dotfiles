@@ -1,0 +1,278 @@
+{
+	// General Settings
+	"editor.autoIndent": "full",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"editor.detectIndentation": true,
+	"editor.formatOnPaste": false,
+	"editor.formatOnSave": true,
+	"editor.insertSpaces": true,
+	"editor.lineNumbers": "on",
+	"editor.renderControlCharacters": true,
+	"editor.renderWhitespace": "all",
+	"editor.linkedEditing": true,
+	"editor.rulers": [80],
+	"editor.tabCompletion": "on",
+	"editor.wordWrap": "wordWrapColumn",
+	"editor.wordWrapColumn": 80,
+	"editor.fontFamily": "Cousine,Liberation Mono,DejaVu Sans Mono,Courier New,monospace",
+	"files.trimTrailingWhitespace": true,
+	"files.insertFinalNewline": true,
+	"files.associations": {
+		".php_cs": "php",
+		".php_cs.dist": "php",
+		".versionrc": "json",
+		"*.xml.dist": "xml",
+	},
+	"telemetry.enableCrashReporter": false,
+	"telemetry.enableTelemetry": false,
+	"terminal.integrated.cursorStyle": "underline",
+	"terminal.integrated.rendererType": "dom",
+	"terminal.integrated.shell.linux": "/bin/zsh",
+	"terminal.integrated.drawBoldTextInBrightColors": true,
+	"window.newWindowDimensions": "maximized",
+	"workbench.colorTheme": "Coldark - Cold",
+	"workbench.editor.closeEmptyGroups": false,
+	"workbench.editor.highlightModifiedTabs": true,
+	"workbench.sideBar.location": "left",
+	"workbench.preferredDarkColorTheme": "Coldark - Dark",
+	"workbench.preferredLightColorTheme": "Coldark - Cold",
+	// Git Settings
+	"git.enableCommitSigning": true,
+	// Languages Settings
+	// HTML
+	"html.autoClosingTags": true,
+	"html.format.contentUnformatted": "pre,code,textarea",
+	"html.format.enable": true,
+	"html.format.endWithNewline": false,
+	"html.format.extraLiners": null,
+	"html.format.indentInnerHtml": true,
+	"html.format.wrapAttributes": "auto",
+	"html.suggest.html5": true,
+	"html.validate.scripts": true,
+	"html.validate.styles": true,
+	"[html]": {
+		"editor.tabSize": 2,
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	// CSS
+	"css.validate": true,
+	"[css]": {
+		"editor.tabSize": 2
+	},
+	// LESS
+	"less.validate": true,
+	"[less]": {
+		"editor.tabSize": 2
+	},
+	// SCSS
+	"scss.validate": true,
+	"[scss]": {
+		"editor.tabSize": 2
+	},
+	// Javascript
+	"javascript.autoClosingTags": true,
+	"javascript.format.enable": true,
+	"javascript.format.semicolons": "insert",
+	"javascript.preferences.quoteStyle": "double",
+	"javascript.suggest.autoImports": true,
+	"javascript.suggest.completeFunctionCalls": true,
+	"javascript.suggest.completeJSDocs": true,
+	"javascript.suggest.enabled": true,
+	"javascript.validate.enable": true,
+	"[javascript]": {
+		"editor.tabSize": 2,
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": false
+	},
+	"[javascriptreact]": {
+		"editor.tabSize": 2
+	},
+	// JSON
+	"json.format.enable": true,
+	"[json]": {
+		"editor.tabSize": 2,
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+	},
+	"[jsonc]": {
+		"editor.tabSize": 2,
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+	},
+	// Markdown
+	"[markdown]": {
+		"editor.wordWrap": "on",
+		"editor.quickSuggestions": false,
+		"files.trimTrailingWhitespace": false
+	},
+	// PHP
+	"php.suggest.basic": true,
+	"php.validate.enable": true,
+	"php.validate.executablePath": "/usr/bin/php",
+	"php.validate.run": "onSave",
+	"[php]": {
+		"editor.tabSize": 4,
+		"editor.defaultFormatter": "wongjn.php-sniffer"
+	},
+	// TypeScript
+	"typescript.autoClosingTags": true,
+	"typescript.format.enable": true,
+	"typescript.suggest.enabled": true,
+	"typescript.validate.enable": true,
+	"[typescript]": {
+		"editor.tabSize": 2
+	},
+	"[typescriptreact]": {
+		"editor.tabSize": 2
+	},
+	// YAML
+	"[yaml]": {
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2,
+		"editor.autoIndent": "advanced"
+	},
+	// Shell Script
+	"[shellscript]": {
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2,
+		"files.eol": "\n"
+	},
+	// Extensions Settings
+	// Code Runner
+	"code-runner.enableAppInsights": false,
+	// cSpell
+	"cSpell.enableFiletypes": ["twig"],
+	"cSpell.userWords": [
+		"ABSPATH",
+		"Gitlab",
+		"Manjaro",
+		"Pico",
+		"Symfony",
+		"apcom",
+		"armandphilippot",
+		"bloginfo",
+		"coldark",
+		"datetime",
+		"dircolors",
+		"gedit",
+		"htdocs",
+		"itemprop",
+		"itemscope",
+		"itemtype",
+		"keepachangelog",
+		"kses",
+		"minmax",
+		"mixins",
+		"mkcert",
+		"muplugin",
+		"pacman",
+		"philippot",
+		"phpcs",
+		"phpmyadmin",
+		"setfacl",
+		"stylelint",
+		"traefik",
+		"vsce",
+		"wcag",
+		"wp"
+	],
+	// Emmet
+	"emmet.includeLanguages": {
+		"twig": "html",
+		"smarty": "html"
+	},
+	// Path Intellisense
+	"path-intellisense.autoSlashAfterDirectory": true,
+	// PHP Intelephense
+	"intelephense.stubs": [
+		"apache",
+		"bcmath",
+		"bz2",
+		"calendar",
+		"com_dotnet",
+		"Core",
+		"ctype",
+		"curl",
+		"date",
+		"dba",
+		"dom",
+		"enchant",
+		"exif",
+		"FFI",
+		"fileinfo",
+		"filter",
+		"fpm",
+		"ftp",
+		"gd",
+		"gettext",
+		"gmp",
+		"hash",
+		"iconv",
+		"imap",
+		"intl",
+		"json",
+		"ldap",
+		"libxml",
+		"mbstring",
+		"meta",
+		"mysqli",
+		"oci8",
+		"odbc",
+		"openssl",
+		"pcntl",
+		"pcre",
+		"PDO",
+		"pdo_ibm",
+		"pdo_mysql",
+		"pdo_pgsql",
+		"pdo_sqlite",
+		"pgsql",
+		"Phar",
+		"posix",
+		"pspell",
+		"readline",
+		"Reflection",
+		"session",
+		"shmop",
+		"SimpleXML",
+		"snmp",
+		"soap",
+		"sockets",
+		"sodium",
+		"SPL",
+		"sqlite3",
+		"standard",
+		"superglobals",
+		"sysvmsg",
+		"sysvsem",
+		"sysvshm",
+		"tidy",
+		"tokenizer",
+		"xml",
+		"xmlreader",
+		"xmlrpc",
+		"xmlwriter",
+		"xsl",
+		"Zend OPcache",
+		"zip",
+		"zlib",
+		"wordpress"
+	],
+	"intelephense.telemetry.enabled": false,
+	// PHP Sniffer
+	"phpSniffer.autoDetect": true,
+	"phpSniffer.standard": "WordPress",
+	// PHP CS Fixer
+	"php-cs-fixer.executablePath": "php-cs-fixer",
+	"php-cs-fixer.config": ".php_cs;.php_cs.xml.dist",
+	"php-cs-fixer.onsave": true,
+	// Prettier
+	"prettier.bracketSpacing": true,
+	"prettier.proseWrap": "never",
+	"prettier.resolveGlobalModules": true,
+	"prettier.requireConfig": true,
+	// Twig Language 2
+	"twig-language-2.indentStyle": "space",
+	"twig-language-2.spaceClose": true,
+	"twig-language-2.tabSize": 4,
+}
