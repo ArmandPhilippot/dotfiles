@@ -1,0 +1,56 @@
+
+#######################################################################
+# Please use the following guidelines to format all your commit
+# messages:
+#   <HEADER>
+#   <BLANK LINE>
+#   <BODY (optional)>
+#   <BLANK LINE>
+#   <FOOTER (optional)>
+#
+# Please note that:
+#
+# - The HEADER is a single line of max. 50 characters that contains a
+#   succinct description of the change. The HEADER should be structured
+#   as follows:
+#
+#   <type>(<scope (optional)>): <subject>
+#
+#   - <type> describes the kind of change that this commit is
+#     providing. Allowed types are:
+#       * fix (production changes related to bug fix - PATCH)
+#       * feat (production changes related to new feature - MINOR)
+#       * BREAKING CHANGE (breaking API change - MAJOR)
+#       * docs (documentation changes)
+#       * perf (production changes related to backward-compatible
+#         performance improvements)
+#       * style (development changes related to styling the codebase
+#         such as indentations, semi-colons, quotes, trailing commas)
+#       * refactor (development changes related to modifying the
+#         codebase such as removing redundant code, simplifying the
+#         code, renaming variables)
+#       * build (development changes related to the build system:
+#         scripts, configurations, tools, package dependencies...)
+#       * ci (development changes related to the continuous integration
+#         and deployment system)
+#       * test (development changes related to tests)
+#       * chore (other changes)
+#
+#   - <scope> provide additional contextual information. It consist of
+#     a noun describing a section of the codebase.
+#
+#   - <subject> is short summary of the code changes, in the following
+#     format: imperative, no capitalized first letter, no period at the
+#     end.
+#
+# - The BODY provide additional contextual information about the code
+#   changes. It should include the motivation for the change and
+#   contrast this with previous behavior. It must be phrased in
+#   imperative present tense. Try to limit each line to a maximum of 72
+#   characters.
+#
+# - The FOOTER should contain any information about BREAKING CHANGE
+#   and is also the place to reference issues that this commit closes.
+#   Example:
+#   Refs #230
+#######################################################################
