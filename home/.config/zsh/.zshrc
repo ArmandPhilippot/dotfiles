@@ -13,19 +13,19 @@ for file ($ZDOTDIR/functions/*.zsh); do
     source $file
 done
 
-# Plugins
-for plugin ($ZSH_PLUGINS); do
-    if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/$plugin.zsh" ]; then
-        source ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/$plugin.zsh
-    fi
-done
-
 # Themes
 if [ ! "$ZSH_THEME" = ""  ]; then
     if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/themes/$ZSH_THEME.zsh-theme" ]; then
         source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/themes/$ZSH_THEME.zsh-theme"
     fi
 fi
+
+# Plugins
+for plugin ($ZSH_PLUGINS); do
+    if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/$plugin.zsh" ]; then
+        source ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/$plugin.zsh
+    fi
+done
 
 # Aliases
 source ${XDG_CONFIG_HOME:-$HOME/.config}/sh/.aliases

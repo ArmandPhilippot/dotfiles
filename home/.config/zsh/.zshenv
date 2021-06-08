@@ -21,7 +21,7 @@ export SAVEHIST=10000                              # Maximum events in history f
 
 # Custom Zsh
 export ZSH_THEME="coldark"
-export ZSH_PLUGINS=(vcs)
+export ZSH_PLUGINS=(vcs zsh-syntax-highlighting)
 
 # Default Apps
 export EDITOR="nano"
