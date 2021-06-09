@@ -21,7 +21,7 @@ export SAVEHIST=10000                              # Maximum events in history f
 
 # Custom Zsh
 export ZSH_THEME="coldark"
-export ZSH_PLUGINS=(vcs zsh-syntax-highlighting)
+export ZSH_PLUGINS=(vcs zsh-nvm zsh-syntax-highlighting)
 
 # Default Apps
 export EDITOR="nano"
@@ -42,3 +42,4 @@ export GTK2_RC_FILES="{$XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
 export LESSHISTFILE="{$XDG_CACHE_HOME}/less/history"
 export LESSKEY="{$XDG_CONFIG_HOME}/less/lesskey"
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
+export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
