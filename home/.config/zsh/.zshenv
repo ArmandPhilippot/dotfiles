@@ -36,8 +36,9 @@ export GPG_TTY=$(tty)
 # Bat
 export BAT_THEME="Coldark-Dark"
 
-# Vim
-export VIMINIT="${XDG_CONFIG_HOME}/vim/vimrc"
-
-# GTK2
-export GTK2_RC_FILES="${HOME}/.config/gtk-2.0/gtkrc"
+# Force these apps to respect XDG
+# See: https://wiki.archlinux.org/title/XDG_Base_Directory_support#Support
+export GTK2_RC_FILES="{$XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
+export LESSHISTFILE="{$XDG_CACHE_HOME}/less/history"
+export LESSKEY="{$XDG_CONFIG_HOME}/less/lesskey"
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
