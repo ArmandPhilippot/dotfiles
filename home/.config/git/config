@@ -21,4 +21,4 @@
 	insteadOf = https://github.com/
 [include]
 	# Include user-specific info like git credentials.
-	path = ~/.local/lib/private/git/config
+	path = private
