@@ -1,6 +1,6 @@
-[submodule "home/.config/zsh/plugins/zsh-syntax-highlighting"]
-	path = home/.config/zsh/plugins/zsh-syntax-highlighting
+[submodule "home/xdg_config/zsh/plugins/zsh-syntax-highlighting"]
+	path = home/xdg_config/zsh/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
-[submodule "home/.config/zsh/plugins/zsh-nvm"]
-	path = home/.config/zsh/plugins/zsh-nvm
+[submodule "home/xdg_config/zsh/plugins/zsh-nvm"]
+	path = home/xdg_config/zsh/plugins/zsh-nvm
 	url = https://github.com/lukechilds/zsh-nvm

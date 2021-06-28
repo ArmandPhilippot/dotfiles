@@ -171,6 +171,7 @@
 		"phpmyadmin",
 		"setfacl",
 		"stylelint",
+		"submodule",
 		"traefik",
 		"vsce",
 		"wcag",

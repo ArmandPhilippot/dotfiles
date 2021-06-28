@@ -1,1 +1,1 @@
-.config/zsh/.zshenv
+xdg_config/zsh/.zshenv
