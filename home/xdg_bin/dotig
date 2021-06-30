@@ -4,7 +4,8 @@
 # A dotfiles manager to quickly setup your machine & synchronize your dotfiles
 # with Git.
 #
-# Requirements: Git and GNU Coreutils.
+# Requirements: Git, GNU/Linux, GNU Coreutils and curl.
+# Tested with: Manjaro 21, Debian 10, Ubuntu 20 and Fedora 34.
 # Author: Armand Philippot <https://www.armandphilippot.com/>
 # URL: https://github.com/ArmandPhilippot/dotig
 
@@ -55,7 +56,7 @@ DOTIG_LOGO=$(
 EOF
 )
 DOTIG_PATH=""
-DOTIG_VERSION="0.1.0"
+DOTIG_VERSION="1.0.0"
 
 # Colors
 _color_choice=$(printf '\e[34m')
@@ -80,18 +81,43 @@ print_logo() {
   printf "%s\n\n" "$DOTIG_LOGO"
 }
 
+# Return the absolute path.
+# Argument 1: a path to convert. Also used to store the absolute path.
+get_absolute_path() {
+  [ $# -ne 1 ] && error_unexpected
+
+  local -n _file=$1
+  local _absolute_path
+
+  case $_file in
+  /*) _absolute_path=$_file ;;
+  \~/*) _absolute_path="$HOME/${_file:2}" ;;
+  ./*) _absolute_path="$(pwd)/${_file:2}" ;;
+  *) _absolute_path="$(pwd)/$_file" ;;
+  esac
+
+  eval "$1=$_absolute_path"
+}
+
 # Prompt user to define an existing directory path.
 # Return the entered path.
 set_path() {
   local _path
   printf "Set the path: " >&2
-  read -r _path
+  read -r -e _path
+  get_absolute_path _path
 
   while [ ! -d "$_path" ]; do
     printf "%sError:%s %s is not a directory.\n" "$_color_error" "$_color_reset" "${_color_output}${_path}${_color_reset}"
     printf "Please enter a valid path: "
-    read -r _path
+    read -r -e _path
+    get_absolute_path _path
   done
+
+  case $_path in
+    */) : ;;
+    *) _path="${_path}/"
+  esac
 
   eval "$1=$_path"
 }
@@ -103,11 +129,10 @@ is_correct_path() {
   [ $# -ne 1 ] && error_unexpected
 
   local _validation
-  local _valid_path
-  local -n _path=$1
+  local -n _valid_path=$1
 
   while true; do
-    printf "Is %s%s%s correct? %s[y/n]%s " "$_color_output" "$_path" "$_color_reset" "$_color_choice" "$_color_reset"
+    printf "Is %s%s%s correct? %s[y/n]%s " "$_color_output" "$_valid_path" "$_color_reset" "$_color_choice" "$_color_reset"
     read -r _validation
     case $_validation in
     [yY])
@@ -115,7 +140,6 @@ is_correct_path() {
       ;;
     [nN])
       set_path _valid_path
-      _path=$_valid_path
       ;;
     *) printf "%sError:%s please enter %s[y]%ses or %s[n]%so." "$_color_error" "$_color_reset" "$_color_choice" "$_color_reset" "$_color_choice" "$_color_reset" ;;
     esac
@@ -157,9 +181,21 @@ is_verbose() {
 # Functions to handle the various error messages.
 ###############################################################################
 
+# Clean up temporary files then exit.
+cleanup() {
+  is_verbose && printf "\n\nDeleting temporary files...\n"
+  rm -f "$_tmp"
+  if is_verbose; then
+    printf "%sSuccess:%s Temporary files deleted.\n" "$_color_success" "$_color_reset"
+    printf "Exit.\n"
+  fi
+  exit
+}
+
 # Display an error in case of an unplanned scenario then exit.
 error_unexpected() {
   printf "%sAn unexpected error occurred.%s Exit.\n" "$_color_error" "$_color_reset"
+  cleanup
   exit 1
 }
 
@@ -176,6 +212,9 @@ error_backup_path() {
   printf "See CONFIGURATION in \`dotig --help\` or \`dotig -h\`.\n"
   exit 1
 }
+
+# Execute cleanup function if these signals are caught.
+trap cleanup SIGHUP SIGINT SIGQUIT SIGTERM
 
 ###############################################################################
 # Git Helpers
@@ -302,7 +341,7 @@ get_unpushed_commits() {
   _current_branch=$(get_current_branch)
   _upstream_branch=$(get_upstream_branch)
 
-  git -C "$DOTIG_PATH" log --oneline "$_upstream_branch"/"$_current_branch"..HEAD
+  [ "$_local_commit" ] &&  git -C "$DOTIG_PATH" log --oneline "$_upstream_branch"/"$_current_branch"..HEAD
 }
 
 # Check if the repo has Git submodules.
@@ -349,6 +388,7 @@ set_xdg_paths() {
     XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
     XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
     XDG_LIB_HOME=${XDG_LIB_HOME:-$HOME/.local/lib}
+    XDG_STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
   else
     printf "%sError:%s Only Linux is supported.\n" "$_color_error" "$_color_reset"
     exit 2
@@ -366,19 +406,6 @@ is_linux() {
   [ "$OSTYPE" = "linux-gnu" ]
 }
 
-# Check if the current distribution is Manjaro.
-is_manjaro() {
-  if [ -f "/etc/os-release" ]; then
-    # shellcheck disable=SC1091
-    . "/etc/os-release"
-    [ "$ID" ] && [ "$ID" = "manjaro" ]
-  elif [ -f "/etc/lsb-release" ]; then
-    # shellcheck disable=SC1091
-    . "/etc/lsb-release"
-    [ "$DISTRIB_ID" ] && [ "$DISTRIB_ID" = "ManjaroLinux" ]
-  fi
-}
-
 # Check for supported OS/distribution.
 check_os() {
   is_verbose && printf "Identifying the operating system...\n"
@@ -392,15 +419,16 @@ check_os() {
     printf "Exit.\n"
     exit 1
   fi
-
-  if ! is_manjaro; then
-    printf "%sWarning:%s Dotig has only been tested with Manjaro.\n" "$_color_warning" "$_color_reset"
-  fi
 }
 
 # Check if Git is installed.
 is_git_installed() {
   [ -x "$(command -v git)" ]
+}
+
+# Check if curl is installed.
+is_curl_installed() {
+  [ -x "$(command -v curl)" ]
 }
 
 # Check if the commands required by the script are available.
@@ -416,6 +444,14 @@ check_commands() {
     printf "Please install it before using this program.\n"
     printf "Exit.\n"
     exit 1
+  fi
+
+  if is_curl_installed; then
+    if is_verbose; then
+      printf "%sSuccess:%s curl is installed.\n" "$_color_success" "$_color_reset"
+    fi
+  else
+    printf "%sWarning:%s curl is needed to check for Dotig update. Please install it if you want to use this feature.\n" "$_color_warning" "$_color_reset"
   fi
 }
 
@@ -435,18 +471,6 @@ check_requirements() {
 # Check if $DOTFILES is defined and if it is a repo. If not, set both.
 ###############################################################################
 
-# Set the backup directory path and ask if the input is correct.
-# Require 1 argument to store the path.
-# Return the path to use.
-set_backup_path() {
-  local _path
-
-  set_path _path
-  is_correct_path _path
-
-  eval "$1=$_path"
-}
-
 # Check if $DOTFILES is set and contains the correct backup path, if not set it.
 # Require 1 argument to store the path.
 # Return the path to use.
@@ -458,13 +482,22 @@ check_backup_path() {
 
   if [ ! "$DOTFILES" ]; then
     printf "%sWarning:%s The \$DOTFILES variable is not set.\n" "$_color_warning" "$_color_reset"
-    set_backup_path _backup_path
+    set_path _backup_path
+    is_correct_path _backup_path
   elif [ ! -d "$DOTFILES" ]; then
     printf "%sWarning:%s The \$DOTFILES variable does not seem to match a directory.\n" "$_color_warning" "$_color_reset"
-    set_backup_path _backup_path
+    set_path _backup_path
+    is_correct_path _backup_path
   else
     is_verbose && printf "%sSuccess:%s Found \$DOTFILES variable.\n" "$_color_success" "$_color_reset"
     _backup_path=$DOTFILES
+    get_absolute_path _backup_path
+
+    case $_backup_path in
+      */) : ;;
+      *) _backup_path="${_backup_path}/"
+    esac
+
     is_correct_path _backup_path
   fi
 
@@ -514,12 +547,10 @@ ask_remote_name() {
 
 # Define the upstream branch and update the local repo.
 set_upstream_branch() {
-  local _current_branch
   local _git_remotes
   local _remote_name
   local _remote_branch
 
-  _current_branch=$(get_current_branch)
   _git_remotes=$(get_existing_remotes)
 
   if [ "$(printf "%s\n" "$_git_remotes" | wc -l)" -gt 1 ]; then
@@ -528,11 +559,10 @@ set_upstream_branch() {
     _remote_name=$_git_remotes
   fi
 
-  git -C "$DOTIG_PATH" pull "$_remote_name" "$_current_branch"
-
   _remote_branch=$(git -C "$DOTIG_PATH" ls-remote --symref origin HEAD | head -1 | sed 's@ref: refs/heads/@@' | cut -f1)
 
-  git -C "$DOTIG_PATH" fetch --set-upstream "$_remote_name" "$_remote_branch"
+  git -C "$DOTIG_PATH" fetch "$_remote_name"
+  git -C "$DOTIG_PATH" checkout -t "$_remote_name"/"$_remote_branch"
 
   if is_verbose; then
     printf "%sSuccess:%s Upstream set.\n" "$_color_success" "$_color_reset"
@@ -771,6 +801,11 @@ check_dotig_updates() {
   local _download_link
   local _not_found
 
+  if ! is_curl_installed; then
+    printf "\n%sError:%s curl is needed to check for Dotig update. Please install it.\n" "$_color_error" "$_color_reset"
+    return_menu
+  fi
+
   _latest_release=$(get_latest_release)
   _not_found=$(printf "%s" "$_latest_release" | { grep -Po '"message": "Not Found"' || true; })
 
@@ -799,24 +834,6 @@ check_dotig_updates() {
 # Symlinking options
 # Main feature of Dotig: handle backup of dotfiles and symlinking.
 ###############################################################################
-
-# Return the absolute path.
-# Argument 1: a path to convert. Also used to store the absolute path.
-get_absolute_path() {
-  [ $# -ne 1 ] && error_unexpected
-
-  local -n _file=$1
-  local _absolute_path
-
-  case $_file in
-  /*) _absolute_path=$_file ;;
-  \~/*) _absolute_path="$HOME/${_file:2}" ;;
-  ./*) _absolute_path="$(pwd)/${_file:2}" ;;
-  *) _absolute_path="$(pwd)/$_file" ;;
-  esac
-
-  eval "$1=$_absolute_path"
-}
 
 # Display the diff between two files.
 # Argument 1: the file residing in $HOME.
@@ -941,6 +958,10 @@ add_dotfiles() {
         _partial_dest="/home/xdg_lib"
         _removed_part="$XDG_LIB_HOME"
         ;;
+      "$XDG_STATE_HOME"*)
+        _partial_dest="/home/xdg_state"
+        _removed_part="$XDG_STATE_HOME"
+        ;;
       "$HOME"*)
         _partial_dest="/home"
         _removed_part="$HOME"
@@ -995,7 +1016,7 @@ get_backup_dotfiles() {
   _find_cmd=( find "$DOTIG_PATH" -mindepth 2 \( -type f -o -type l \) )
 
   for _exclude_dir in "${_exclude_dirs[@]}"; do
-    _find_cmd+=( -not \( -path "$DOTIG_PATH/${_exclude_dir}/*" -prune \) )
+    _find_cmd+=( -not \( -path "$DOTIG_PATH${_exclude_dir}/*" -prune \) )
   done
   _find_cmd+=( -print )
 
@@ -1016,19 +1037,24 @@ handle_target_update() {
   local _extra_info
   local _choice
 
-  _symlink_target=$(readlink -f "$_symlink")
+  _symlink_target=$(readlink -f "$_symlink") || true
+  [ -z "$_symlink_target" ] && _symlink_target="Target does not exist."
 
   if [ "$_symlink_target" = "$_file" ]; then
     if is_verbose; then
       printf "A symlink with the same target already exists.\n"
-      printf "%sSkipped:%s %s\n" "$_color_warning" "$_color_reset" "$file"
+      printf "%sSkipped:%s %s\n" "$_color_warning" "$_color_reset" "$_file"
     fi
   else
-    [ -h "$_file" ] && _extra_info=" (also a symlink)" && _file_target=$(readlink -f "$_file")
+    if [ -h "$_file" ]; then
+      _extra_info=" (also a symlink)"
+      _file_target=$(readlink -f "$_file") || true
+      [ -z "$_file_target" ] && _file_target="Target does not exist."
+    fi
 
     printf "\n%sWarning:%s A symlink exists but its target does not match your dotfile backup:\n" "$_color_warning" "$_color_reset"
     printf "* Symlink: %s\n" "${_color_output}${_symlink}${_color_reset}"
-    printf "* Symlink target: %s\n" "${_color_output}${_target}${_color_reset}"
+    printf "* Symlink target: %s\n" "${_color_output}${_symlink_target}${_color_reset}"
     printf "* Backup file%s: %s\n" "$_extra_info" "${_color_output}${_file}${_color_reset}"
     [ -h "$_file" ] && printf "* Backup target: %s\n" "${_color_output}${_file_target}${_color_reset}"
 
@@ -1043,7 +1069,7 @@ handle_target_update() {
       case $_choice in
       1)
         is_verbose && printf "Updating symlink target...\n"
-        ln -s -f "$file" "$_symlink"
+        ln -s -f "$_file" "$_symlink"
         printf "%sSuccess:%s %s updated.\n" "$_color_success" "$_color_reset" "$_symlink"
         break
         ;;
@@ -1099,29 +1125,33 @@ update_symlinks() {
 
   while IFS= read -r _backup_dotfile <&3; do
     case $_backup_dotfile in
-      "${DOTIG_PATH}/home/xdg_bin/"*)
+      "${DOTIG_PATH}home/xdg_bin/"*)
         _partial_dest="$XDG_BIN_HOME"
-        _removed_part="${DOTIG_PATH}/home/xdg_bin"
+        _removed_part="${DOTIG_PATH}home/xdg_bin"
         ;;
-      "${DOTIG_PATH}/home/xdg_cache/"*)
+      "${DOTIG_PATH}home/xdg_cache/"*)
         _partial_dest="$XDG_CACHE_HOME"
-        _removed_part="${DOTIG_PATH}/home/xdg_cache"
+        _removed_part="${DOTIG_PATH}home/xdg_cache"
         ;;
-      "${DOTIG_PATH}/home/xdg_config/"*)
+      "${DOTIG_PATH}home/xdg_config/"*)
         _partial_dest="$XDG_CONFIG_HOME"
-        _removed_part="${DOTIG_PATH}/home/xdg_config"
+        _removed_part="${DOTIG_PATH}home/xdg_config"
         ;;
-      "${DOTIG_PATH}/home/xdg_data/"*)
+      "${DOTIG_PATH}home/xdg_data/"*)
         _partial_dest="$XDG_DATA_HOME"
-        _removed_part="${DOTIG_PATH}/home/xdg_data"
+        _removed_part="${DOTIG_PATH}home/xdg_data"
         ;;
-      "${DOTIG_PATH}/home/xdg_lib/"*)
+      "${DOTIG_PATH}home/xdg_lib/"*)
         _partial_dest="$XDG_LIB_HOME"
-        _removed_part="${DOTIG_PATH}/home/xdg_lib"
+        _removed_part="${DOTIG_PATH}home/xdg_lib"
         ;;
-      "${DOTIG_PATH}/home/"*)
+      "${DOTIG_PATH}home/xdg_state/"*)
+        _partial_dest="$XDG_STATE_HOME"
+        _removed_part="${DOTIG_PATH}home/xdg_state"
+        ;;
+      "${DOTIG_PATH}home/"*)
         _partial_dest="$HOME"
-        _removed_part="${DOTIG_PATH}/home"
+        _removed_part="${DOTIG_PATH}home"
         ;;
       *)
         _partial_dest=""
@@ -1138,6 +1168,7 @@ update_symlinks() {
         handle_duplicate "$_dotfile" "$_backup_dotfile"
       else
         is_verbose && printf "Creating symlink from %s to %s\n" "$_backup_dotfile" "$_dotfile"
+        mkdir -p "$(dirname "$_dotfile")"
         ln -s "$_backup_dotfile" "$_dotfile"
         is_verbose && printf "%sSuccess:%s Symlink created for %s\n" "$_color_success" "$_color_reset" "$_backup_dotfile"
       fi
@@ -1219,50 +1250,52 @@ remove_symlinks() {
   printf "\nReplacing symlinks with original files...\n"
 
   _tmp=$(mktemp "${TMPDIR:-/tmp}/dotig.XXXXXX")
-  find "$HOME" -type l -not \( -path "$DOTIG_PATH/*" -prune \) -print > "$_tmp"
+  find "$HOME" -type l -not \( -path "$DOTIG_PATH/*" -prune \) -ilname "$DOTIG_PATH*" -print > "$_tmp"
 
   while IFS= read -r _symlink <&3; do
-    _symlink_target=$(readlink "$_symlink")
+    _symlink_target=$(readlink "$_symlink") || true
 
-    if is_file_in_backup_path "$_symlink_target"; then
-      case $_symlink_target in
-        "${DOTIG_PATH}/home/xdg_bin/"*)
-          _partial_dest="${DOTIG_PATH}/home/xdg_bin"
-          _removed_part="$XDG_BIN_HOME"
-          ;;
-        "${DOTIG_PATH}/home/xdg_cache/"*)
-          _partial_dest="${DOTIG_PATH}/home/xdg_cache"
-          _removed_part="$XDG_CACHE_HOME"
-          ;;
-        "${DOTIG_PATH}/home/xdg_config/"*)
-          _partial_dest="${DOTIG_PATH}/home/xdg_config"
-          _removed_part="$XDG_CONFIG_HOME"
-          ;;
-        "${DOTIG_PATH}/home/xdg_data/"*)
-          _partial_dest="${DOTIG_PATH}/home/xdg_data"
-          _removed_part="$XDG_DATA_HOME"
-          ;;
-        "${DOTIG_PATH}/home/xdg_lib/"*)
-          _partial_dest="${DOTIG_PATH}/home/xdg_lib"
-          _removed_part="$XDG_LIB_HOME"
-          ;;
-        "${DOTIG_PATH}/home/"*)
-          _partial_dest="${DOTIG_PATH}/home"
-          _removed_part="$HOME"
-          ;;
-        *)
-          _partial_dest="$DOTIG_PATH"
-          _removed_part=""
-          ;;
-      esac
+    case $_symlink_target in
+      "${DOTIG_PATH}home/xdg_bin/"*)
+        _partial_dest="${DOTIG_PATH}home/xdg_bin"
+        _removed_part="$XDG_BIN_HOME"
+        ;;
+      "${DOTIG_PATH}home/xdg_cache/"*)
+        _partial_dest="${DOTIG_PATH}home/xdg_cache"
+        _removed_part="$XDG_CACHE_HOME"
+        ;;
+      "${DOTIG_PATH}home/xdg_config/"*)
+        _partial_dest="${DOTIG_PATH}home/xdg_config"
+        _removed_part="$XDG_CONFIG_HOME"
+        ;;
+      "${DOTIG_PATH}home/xdg_data/"*)
+        _partial_dest="${DOTIG_PATH}home/xdg_data"
+        _removed_part="$XDG_DATA_HOME"
+        ;;
+      "${DOTIG_PATH}home/xdg_lib/"*)
+        _partial_dest="${DOTIG_PATH}home/xdg_lib"
+        _removed_part="$XDG_LIB_HOME"
+        ;;
+      "${DOTIG_PATH}home/xdg_state/"*)
+        _partial_dest="${DOTIG_PATH}home/xdg_state"
+        _removed_part="$XDG_STATE_HOME"
+        ;;
+      "${DOTIG_PATH}home/"*)
+        _partial_dest="${DOTIG_PATH}home"
+        _removed_part="$HOME"
+        ;;
+      *)
+        _partial_dest="$DOTIG_PATH"
+        _removed_part=""
+        ;;
+    esac
 
-      _backup_dotfile=${_partial_dest}${_symlink#$_removed_part}
+    _backup_dotfile=${_partial_dest}${_symlink#$_removed_part}
 
-      if [ "$_backup_dotfile" = "$_symlink_target" ]; then
-        replace_symlink_with_file "$_symlink" "$_backup_dotfile"
-      else
-        handle_target_issue "$_symlink" "$_symlink_target" "$_backup_dotfile"
-      fi
+    if [ "$_backup_dotfile" = "$_symlink_target" ]; then
+      replace_symlink_with_file "$_symlink" "$_backup_dotfile"
+    else
+      handle_target_issue "$_symlink" "$_symlink_target" "$_backup_dotfile"
     fi
 
   done 3< "$_tmp"
@@ -1363,14 +1396,14 @@ update_all_submodules() {
 # Display the main help menu.
 print_dotig_help() {
   cat <<EOF
-USAGE
+# USAGE
 dotig [OPTIONS]
-dotig <COMMANDS> [<FILES...>]
+dotig [-v|--verbose] <COMMANDS> [<FILES...>]
 
-DESCRIPTION
+# DESCRIPTION
 Dotig is a dotfiles manager to quickly setup your machine & synchronize your dotfiles with Git.
 
-COMMANDS
+# COMMANDS
 add               Add new dotfiles and create symlinks.
                   Accept both absolute and relative paths.
 update            Update all symlinks.
@@ -1383,25 +1416,26 @@ rm                Replace all symlinks with the original file.
 status            Display the status of your dotfiles repository.
                   Check for dirty files and if push or pull is needed.
 
-OPTIONS
+# OPTIONS
 -h, --help        Print this help.
 -ns, --no-status  Do not show the repo status.
 -v, --verbose     Explain what is done.
 --version         Print Dotig version and check for new releases.
 
-CONFIGURATION
-\$DOTFILES         Define the path of your dotfiles repository.
-                  Declare its value in your shell.
+# CONFIGURATION
+DOTFILES          Environment variable to define the path of your dotfiles
+                  repository. You need to declare its value in your shell
+                  configuration files.
                   For example in .profile for Bash or .zshenv for Zsh.
                   Current value: $DOTFILES
 
-BUGS
+# BUGS
 If you find any bug, you can report it on https://github.com/ArmandPhilippot/dotig/issues.
 
-ABOUT
-version           Dotig $DOTIG_VERSION
-license           MIT
-project url       https://github.com/ArmandPhilippot/dotig
+# ABOUT
+Version           Dotig $DOTIG_VERSION
+License           MIT
+Project URL       https://github.com/ArmandPhilippot/dotig
 EOF
 
   return_menu
