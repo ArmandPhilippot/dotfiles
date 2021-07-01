@@ -47,3 +47,9 @@ fi
 
 # nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# phpenv
+if [[ -d ${XDG_DATA_HOME}/phpenv ]]; then
+    export PATH="${XDG_DATA_HOME}/phpenv/bin:$PATH"
+    eval "$(phpenv init -)"
+fi
