@@ -4,10 +4,14 @@ include "/usr/share/nano-syntax-highlighting/*.nanorc"
 
 # Options
 set autoindent
-set breaklonglines
 set linenumbers
-set softwrap
 set zap
+
+# Line Wrapping
+unset breaklonglines
+set atblanks
+set softwrap
+
 
 # Paint the interface elements. 256 colors terminal is needed for some colors.
 set titlecolor black,blue
