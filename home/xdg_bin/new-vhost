@@ -310,14 +310,14 @@ set_certs_path() {
   printf "%sSuccess:%s certs path saved.\n" "$_color_success" "$_color_reset"
 }
 
-print_resume() {
+print_summary() {
   [ $# -ne 4 ] && error_callback
 
   local _vhost_name=$1
   local _webroot_name=$2
   local _workspace_path=$3
   local _certs_path=$4
-  local _resume_choice
+  local _summary_choice
 
   printf "\n%sWarning:%s We are now going to configure the virtual host with the information you provide:\n" "$_color_warning" "$_color_reset"
   printf "* Name: %s\n" "${_color_output}${_vhost_name}${_color_reset}"
@@ -327,9 +327,9 @@ print_resume() {
 
   while true; do
     printf "\nShould we proceed? [y/n] "
-    read -r _resume_choice
+    read -r _summary_choice
 
-    case $_resume_choice in
+    case $_summary_choice in
       [yY]) break ;;
       [nN])
         printf "Abort.\n"
@@ -509,7 +509,7 @@ exit
 
 # Check options passed as arguments.
 # Require at least one argument.
-loop_through_options() {
+set_options() {
   [ $# -eq 0 ] && error_unexpected
 
   while [ $# -ge 1 ]; do
@@ -533,7 +533,7 @@ main() {
   set_webroot_name _webroot
   set_workspace_path _workspace
   set_certs_path _certs
-  print_resume "$_vhost" "$_webroot" "$_workspace" "$_certs"
+  print_summary "$_vhost" "$_webroot" "$_workspace" "$_certs"
   create_vhost_dir "$_workspace" "$_vhost" "$_webroot"
   generate_local_certs "$_certs" "$_vhost"
   create_vhost_config "$_workspace" "$_vhost" "$_webroot" "$_certs"
@@ -550,5 +550,5 @@ main() {
 if [ $# -eq 0 ]; then
   main
 else
-  loop_through_options "$@"
+  set_options "$@"
 fi
