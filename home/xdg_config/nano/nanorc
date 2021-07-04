@@ -5,6 +5,7 @@ include "/usr/share/nano-syntax-highlighting/*.nanorc"
 # Options
 set autoindent
 set linenumbers
+set tabsize 4
 set zap
 
 # Line Wrapping
