@@ -39,4 +39,5 @@ MiscNewTabAdjacent=FALSE
 MiscSearchDialogOpacity=100
 MiscShowUnsafePasteDialog=TRUE
 TabActivityColor=#6cb8e6
+TitleMode=TERMINAL_TITLE_REPLACE
 
