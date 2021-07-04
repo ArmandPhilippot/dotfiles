@@ -15,6 +15,11 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
 
+# Exit shell even if the command line is filled
+exit_zsh() { exit }
+zle -N exit_zsh
+bindkey '^D' exit_zsh
+
 # Define more comprehensive names
 # See: `man 5 terminfo`
 typeset -g -A key
