@@ -28,9 +28,35 @@
 	"telemetry.enableCrashReporter": false,
 	"telemetry.enableTelemetry": false,
 	"terminal.integrated.cursorStyle": "underline",
-	"terminal.integrated.rendererType": "dom",
-	"terminal.integrated.shell.linux": "/bin/zsh",
 	"terminal.integrated.drawBoldTextInBrightColors": true,
+	"terminal.integrated.profiles.linux": {
+		"bash": {
+			"path": "/bin/bash"
+		},
+		"zsh": {
+			"path": "/bin/zsh"
+		},
+	},
+	"terminal.integrated.defaultProfile.linux": "zsh",
+	"terminal.integrated.profiles.windows": {
+		"PowerShell": {
+			"source": "PowerShell",
+			"icon": "terminal-powershell"
+		},
+		"Command Prompt": {
+			"path": [
+				"${env:windir}\\Sysnative\\cmd.exe",
+				"${env:windir}\\System32\\cmd.exe"
+			],
+			"args": [],
+			"icon": "terminal-cmd"
+		},
+		"Git Bash": {
+			"source": "Git Bash"
+		}
+	},
+	"terminal.integrated.defaultProfile.windows": "PowerShell",
+	"terminal.integrated.rendererType": "dom",
 	"window.newWindowDimensions": "maximized",
 	"workbench.colorTheme": "Coldark - Cold",
 	"workbench.editor.closeEmptyGroups": false,
@@ -272,6 +298,8 @@
 	"prettier.proseWrap": "never",
 	"prettier.resolveGlobalModules": true,
 	"prettier.requireConfig": true,
+	// YAML
+	"redhat.telemetry.enabled": false,
 	// Twig Language 2
 	"twig-language-2.indentStyle": "space",
 	"twig-language-2.spaceClose": true,
