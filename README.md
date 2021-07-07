@@ -20,14 +20,14 @@ I try to comply to the [XDG Base Directory specification](http://standards.freed
 
 I use [Dotig](https://github.com/ArmandPhilippot/dotig) to managed my dotfiles. It is a script written by myself that use XDG paths.
 
-|XDG|Repo|`$HOME`|Description|
+|XDG|Repo|`$HOME` (based on XDG settings)|Description|
 |---|---|---|---|
 |`XDG_BIN_HOME`|`./home/xdg_bin/`|`~/.local/bin`|Binaries (Unofficial)|
-|`XDG_CACHE_HOME`|`./home/xdg_cache`|`~/.cache`|Cache|
-|`XDG_CONFIG_HOME`|`./home/xdg_config`|`~/.config`|Config|
-|`XDG_DATA_HOME`|`./home/xdg_data`|`~/.local/share`|Data|
-|`XDG_LIB_HOME`|`./home/xdg_lib`|`~/.local/lib`|Libraries (Unofficial)|
-|`XDG_STATE_HOME`|`./home/xdg_state`|`~/.local/state`|State|
+|`XDG_CACHE_HOME`|`./home/xdg_cache/`|`~/.cache`|Cache|
+|`XDG_CONFIG_HOME`|`./home/xdg_config/`|`~/.config`|Config|
+|`XDG_DATA_HOME`|`./home/xdg_data/`|`~/.local/share`|Data|
+|`XDG_LIB_HOME`|`./home/xdg_lib/`|`~/.local/lib`|Libraries (Unofficial)|
+|`XDG_STATE_HOME`|`./home/xdg_state/`|`~/.local/state`|State|
 ||`./home`|`~/`|Other files in `$HOME`|
 
 The unofficial variables come from:
@@ -41,10 +41,6 @@ I do not backup all the dotfiles, so it is more likely that `XDG_CACHE_HOME` and
 * `dotig`: my dotfiles manager
 * `fuzbat`: used as a note-taking app from terminal
 * `new-vhost`: to quickly create a new virtual host with a local cert on Manjaro
-
-## Installation
-
-At this time, I do not have a script to automate the process. Why? I can't decide which tools I want to use to facilitate my dotfiles management. I mostly hesitate between a personal script or a solution like GNU Stow.
 
 ## Acknowledgment
 
