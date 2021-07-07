@@ -3,7 +3,7 @@
 # Sourced on all invocations of the shell. Contains exported variables that
 # should be available to other programs.
 
-export DOTFILES="$HOME/.dotfiles"
+export DOTFILES="$HOME/.local/dotfiles"
 
 # XDG Base Directory Specification
 # See: http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
@@ -42,6 +42,7 @@ export BAT_THEME="Coldark-Dark"
 export GTK2_RC_FILES="{$XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
 export LESSHISTFILE="{$XDG_CACHE_HOME}/less/history"
 export LESSKEY="{$XDG_CONFIG_HOME}/less/lesskey"
+export MYSQL_HISTFILE="${XDG_CACHE_HOME}/mysql/history"
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
 export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
 export PHPENV_ROOT="${XDG_DATA_HOME}/phpenv"
