@@ -3,8 +3,6 @@
 # Sourced in interactive shells. Contains commands to set up aliases,
 # functions, options, key bindings, etc.
 
-zmodload zsh/zprof
-
 # Make sure the ZSH cache directory exists
 [ -d "$XDG_CACHE_HOME/zsh" ] || mkdir -p "$XDG_CACHE_HOME/zsh"
 
