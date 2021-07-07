@@ -37,6 +37,9 @@ export GPG_TTY=$(tty)
 # Bat
 export BAT_THEME="Coldark-Dark"
 
+# nvm
+export NVM_LAZY_LOAD=true
+
 # Force these apps to respect XDG
 # See: https://wiki.archlinux.org/title/XDG_Base_Directory_support#Support
 export GTK2_RC_FILES="{$XDG_CONFIG_HOME}/gtk-2.0/gtkrc"

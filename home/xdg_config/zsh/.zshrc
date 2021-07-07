@@ -3,6 +3,8 @@
 # Sourced in interactive shells. Contains commands to set up aliases,
 # functions, options, key bindings, etc.
 
+zmodload zsh/zprof
+
 # Make sure the ZSH cache directory exists
 [ -d "$XDG_CACHE_HOME/zsh" ] || mkdir -p "$XDG_CACHE_HOME/zsh"
 
@@ -44,9 +46,6 @@ if [ $(command -v "fzf") ]; then
     source /usr/share/fzf/completion.zsh
     source /usr/share/fzf/key-bindings.zsh
 fi
-
-# nvm
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 # phpenv
 if [[ -d ${XDG_DATA_HOME}/phpenv ]]; then
