@@ -4,6 +4,7 @@
 # should be available to other programs.
 
 export DOTFILES="$HOME/.local/dotfiles"
+export DOTFILES_PRIVATE="$HOME/.local/private"
 
 # XDG Base Directory Specification
 # See: http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
