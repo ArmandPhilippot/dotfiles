@@ -25,6 +25,7 @@
 		".versionrc": "json",
 		"*.xml.dist": "xml",
 	},
+	"security.workspace.trust.enabled": false,
 	"telemetry.enableCrashReporter": false,
 	"telemetry.enableTelemetry": false,
 	"terminal.integrated.cursorStyle": "underline",
