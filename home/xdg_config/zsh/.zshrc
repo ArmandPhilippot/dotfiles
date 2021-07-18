@@ -50,3 +50,6 @@ if [[ -d ${XDG_DATA_HOME}/phpenv ]]; then
     export PATH="${XDG_DATA_HOME}/phpenv/bin:$PATH"
     eval "$(phpenv init -)"
 fi
+
+# Go
+export PATH="${XDG_BIN_HOME}/go:$PATH"

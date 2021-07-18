@@ -43,6 +43,8 @@ export NVM_LAZY_LOAD=true
 
 # Force these apps to respect XDG
 # See: https://wiki.archlinux.org/title/XDG_Base_Directory_support#Support
+export GOBIN="${XDG_BIN_HOME}"
+export GOPATH="${XDG_DATA_HOME}/go"
 export GTK2_RC_FILES="{$XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
 export LESSHISTFILE="{$XDG_CACHE_HOME}/less/history"
 export LESSKEY="{$XDG_CONFIG_HOME}/less/lesskey"
