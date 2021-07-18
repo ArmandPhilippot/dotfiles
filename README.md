@@ -41,6 +41,7 @@ I do not backup all the dotfiles, so it is more likely that `XDG_CACHE_HOME` and
 * `dotig`: my dotfiles manager
 * `fuzbat`: used as a note-taking app from terminal
 * `new-vhost`: to quickly create a new virtual host with a local cert on Manjaro
+* `schemer2`: generate a color palette from a source image
 
 ## Acknowledgment
 
@@ -57,6 +58,7 @@ There are some exception:
 * Dotig is licensed under the MIT license
 * new-vhost is licensed under the MIT license
 * fuzbat is only adapted by me so the credit goes to [Casey Brant](https://caseybrant.com/). I don't see a license but maybe I'm wrong.
+* schemer2 is not mine so the credit goes to [Daniel Byron](https://github.com/thefryscorer/schemer2). Again, I don't see a license but maybe I'm wrong.
 * the various Git submodules include their own license:
     * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) is licensed under the BSD 3-Clause "New" or "Revised" License
     * [zsh-nvm](https://github.com/lukechilds/zsh-nvm) is licensed under  the MIT license
