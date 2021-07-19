@@ -38,6 +38,10 @@ I do not backup all the dotfiles, so it is more likely that `XDG_CACHE_HOME` and
 
 ## Binaries
 
+The `install-pkg` script at the repository root allows me to install all the packages that I use frequently. It also creates missing directories to be XDG compliant.
+
+In `./home/xdg_bin`:
+
 * `dotig`: my dotfiles manager
 * `fuzbat`: used as a note-taking app from terminal
 * `new-vhost`: to quickly create a new virtual host with a local cert on Manjaro

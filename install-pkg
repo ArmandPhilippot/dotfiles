@@ -1,0 +1,223 @@
+#!/usr/bin/env bash
+#
+# Speed up new system configuration. Install packages and create needed paths.
+# Author: Armand Philippot <https://www.armandphilippot.com/>
+
+set -e
+
+###############################################################################
+# Packages
+###############################################################################
+
+# Office
+_browser=(firefox firefox-i18n-en-us firefox-i18n-fr chromium firefox-developer-edition firefox-developer-edition-i18n-en-us firefox-developer-edition-i18n-fr)
+_calculator=(galculator)
+_calendar=(osmo)
+_mail_client=(thunderbird thunderbird-i18n-en-us thunderbird-i18n-fr)
+_password_manager=(keepassxc)
+_text_editors=(libreoffice-fresh libreoffice-fresh-fr nano nano-syntax-highlighting vim zettlr-bin)
+
+# Dev
+_apache=(apache php php-apache mariadb phpmyadmin)
+_design_tools=(gimp inkscape)
+_dev_tools=(code composer checkbashisms docker docker-compose filezilla go mkcert npm openssh poedit symfony-cli x11-ssh-askpass yarn)
+
+# Multimedia
+_ebooks=(calibre)
+_games=(dosbox lutris steam-manjaro)
+_music=(quodlibet kakasi libappindicator-gtk3 python-musicbrainzngs)
+_video_editor=(peek pitivi)
+_video_player=(smplayer smplayer-skins smplayer-themes vlc)
+
+# System
+_ntfs_support=(dosfstools exfat-utils ntfs-3g)
+_terminal=(alacritty bash-completion bat exa fzf zsh zsh-completions)
+_xfce_tools=(catfish mousepad ristretto xfce4-places-plugin xfce4-screenshooter xfce4-whiskermenu-plugin)
+
+# Others
+_virtualization=(virtualbox)
+_emulator=(wine)
+
+# Packages not necessary. Mostly here as reminder in case I need them.
+_optional=(figlet)
+
+###############################################################################
+# Helpers
+###############################################################################
+
+# Check if the current OS is GNU/Linux.
+is_linux() {
+    [ "$OSTYPE" = "linux-gnu" ]
+}
+
+# Check if the distribution is Manjaro.
+is_manjaro() {
+    if [ -f "/etc/os-release" ]; then
+        # shellcheck disable=SC1091
+        . "/etc/os-release"
+        [ "$ID" ] && [ "$ID" = "manjaro" ]
+    elif [ -f "/etc/lsb-release" ]; then
+        # shellcheck disable=SC1091
+        . "/etc/lsb-release"
+        [ "$DISTRIB_ID" ] && [ "$DISTRIB_ID" = "ManjaroLinux" ]
+    fi
+}
+
+# Check if the desktop environment is XFCE.
+is_xfce() {
+    [ "$DESKTOP_SESSION" = "xfce" ]
+}
+
+# Check if a package is already installed.
+is_package_installed() {
+    local _package=$1
+
+    if is_manjaro; then
+        pacman -Qq | grep -qw "$_package"
+    fi
+}
+
+# Check if a package exists in official repo.
+is_package_in_official_repo() {
+    local _package=$1
+
+    if is_manjaro; then
+        pacman -Ssq ^"$_package"$ 1>/dev/null
+    fi
+}
+
+# Check if a package exists in AUR.
+is_package_in_aur() {
+    yay -Ssq ^"$_package"$ 1>/dev/null
+}
+
+###############################################################################
+# Handle packages install
+###############################################################################
+
+# Install another package manager to handle alternative packages source.
+install_alt_package_manager() {
+    if is_manjaro; then
+        if ! is_package_installed "yay"; then
+            sudo pacman -S --noconfirm yay
+        fi
+    fi
+}
+
+# Use the correct package manager depending on system.
+sudo_install() {
+    local _package=$1
+
+    if is_linux; then
+        is_manjaro && sudo pacman -S --noconfirm "$_package"
+    fi
+}
+
+# Use an alternative method to install the package.
+alternative_install() {
+    local _package=$1
+
+    if is_manjaro; then
+        if is_package_in_aur; then
+            yay -S --nocleanmenu --nodiffmenu "$_package"
+        else
+            printf "Warning: %s not found!\n" "$_package"
+        fi
+    else
+        printf "System not supported. Exit.\n"
+        exit
+    fi
+}
+
+# Check if packages are already installed, if not install them.
+install_packages() {
+    local _packages=("$@")
+
+    for _package in "${_packages[@]}"; do
+        if ! is_package_installed "$_package"; then
+            if is_package_in_official_repo "$_package"; then
+                sudo_install "$_package"
+            else
+                alternative_install "$_package"
+            fi
+        else
+            printf "%s is already installed.\n" "$_package"
+        fi
+    done
+}
+
+###############################################################################
+# Profiles
+###############################################################################
+
+# Install packages needed in any case.
+common() {
+    install_alt_package_manager
+    is_xfce && install_packages "${_xfce_tools[@]}"
+    install_packages "${_apache[@]}" "${_browser[@]}" "${_calculator[@]}" "${_dev_tools[@]}" "${_design_tools[@]}" "${_mail_client[@]}" "${_password_manager[@]}" "${_terminal[@]}" "${_text_editors[@]}"
+}
+
+# Install packages for personal computer.
+perso() {
+    install_packages "${_calendar[@]}" "${_ebooks[@]}" "${_emulator[@]}" "${_games[@]}" "${_music[@]}" "${_ntfs_support[@]}" "${_video_editor[@]}" "${_video_player[@]}" "${_virtualization[@]}"
+}
+
+###############################################################################
+# Make sure all paths exist
+# XDG paths are used to relocate some files, so directories must exist in order
+# for files to be saved.
+###############################################################################
+
+# Create missing directories.
+create_paths() {
+    mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/bash/"
+    mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/nano/"
+    mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/"
+    mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/"
+}
+
+###############################################################################
+# Main
+###############################################################################
+
+# Print script help.
+print_help() {
+    cat <<EOF
+USAGE
+$0 OPTION
+
+OPTIONS
+-h, --help          Print this help.
+-o, --optional      Install optional packages.
+-p, --perso         Install packages for personal computer only.
+-w, --work          Install packages for work computer only.
+EOF
+}
+
+# Main entry point of the script.
+main() {
+    [ $# -ne 1 ] && printf "One argument and only one must be passed. See %s --help. Exit.\n" "$0" && exit
+
+    case $1 in
+    -h | --help)
+        print_help
+        ;;
+    -o | --optional) install_packages "${_optional[@]}" ;;
+    -p | --perso)
+        common
+        perso
+        ;;
+    -w | --work)
+        common
+        ;;
+    *) printf "Invalid usage. Use -h or --help to print help.\n" ;;
+    esac
+
+    create_paths
+
+    printf "\nSuccess: all done!\n"
+
+    exit
+}
+
+main "$@"
