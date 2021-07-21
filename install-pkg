@@ -13,6 +13,8 @@ set -e
 _browser=(firefox firefox-i18n-en-us firefox-i18n-fr chromium firefox-developer-edition firefox-developer-edition-i18n-en-us firefox-developer-edition-i18n-fr)
 _calculator=(galculator)
 _calendar=(osmo)
+_cd_tools=(asunder xfburn)
+_download=(uget)
 _mail_client=(thunderbird thunderbird-i18n-en-us thunderbird-i18n-fr)
 _password_manager=(keepassxc)
 _text_editors=(libreoffice-fresh libreoffice-fresh-fr nano nano-syntax-highlighting vim zettlr-bin)
@@ -26,7 +28,7 @@ _dev_tools=(code composer checkbashisms docker docker-compose filezilla go mkcer
 _ebooks=(calibre)
 _games=(dosbox lutris steam-manjaro)
 _music=(quodlibet kakasi libappindicator-gtk3 python-musicbrainzngs)
-_video_editor=(peek pitivi)
+_video_editor=(avidemux-qt peek pitivi)
 _video_player=(smplayer smplayer-skins smplayer-themes vlc)
 
 # System
@@ -159,7 +161,7 @@ common() {
 
 # Install packages for personal computer.
 perso() {
-    install_packages "${_calendar[@]}" "${_ebooks[@]}" "${_emulator[@]}" "${_games[@]}" "${_music[@]}" "${_ntfs_support[@]}" "${_video_editor[@]}" "${_video_player[@]}" "${_virtualization[@]}"
+    install_packages "${_calendar[@]}" "${_cd_tools[@]}" "${_download[@]}" "${_ebooks[@]}" "${_emulator[@]}" "${_games[@]}" "${_music[@]}" "${_ntfs_support[@]}" "${_video_editor[@]}" "${_video_player[@]}" "${_virtualization[@]}"
 }
 
 ###############################################################################
