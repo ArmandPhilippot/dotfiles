@@ -42,6 +42,7 @@ The `install-pkg` script at the repository root allows me to install all the pac
 
 In `./home/xdg_bin`:
 
+* `convto`: to quickly convert all files in the current directory (different operations are supported)
 * `dotig`: my dotfiles manager
 * `fuzbat`: used as a note-taking app from terminal
 * `new-vhost`: to quickly create a new virtual host with a local cert on Manjaro
@@ -59,6 +60,7 @@ For most of the dotfiles, I don't see the interest to put them under a license s
 
 There are some exception:
 
+* convto is licensed under the MIT license
 * Dotig is licensed under the MIT license
 * new-vhost is licensed under the MIT license
 * fuzbat is only adapted by me so the credit goes to [Casey Brant](https://caseybrant.com/). I don't see a license but maybe I'm wrong.

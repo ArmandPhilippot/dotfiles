@@ -1,0 +1,303 @@
+#!/usr/bin/env bash
+# convto
+# A script to quickly convert all files in a directory.
+# Tested on: Manjaro 21.1.0.
+# Originally written by Armand Philippot <https://www.armandphilippot.com>
+
+###############################################################################
+#
+# The MIT License (MIT)
+
+# Copyright (c) 2021 Armand Philippot
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+###############################################################################
+
+set -e
+
+###############################################################################
+# Helpers
+###############################################################################
+
+invalid_usage() {
+  if [ $# -gt 1 ]; then
+    unexpected_error
+  elif [ $# -eq 1 ]; then
+    printf "Invalid usage. Use %s %s -h or --help to print help.\n" "$0" "$1"
+  else
+    printf "Invalid usage. Use -h or --help to print help.\n"
+  fi
+
+  exit 1
+}
+
+unexpected_error() {
+  printf "An unexpected error happened. Exit.\n" && exit 2
+}
+
+is_command_installed() {
+  [ $# -ne 1 ] && unexpected_error
+
+  [ -x "$(command -v "$1")" ]
+}
+
+check_command() {
+  [ $# -ne 1 ] && unexpected_error
+
+  if ! is_command_installed "$1"; then
+    printf "%s is not installed. Please install it then try again. Exit.\n" "$1"
+    exit 1
+  fi
+}
+
+is_help_option() {
+  [ $# -ne 1 ] && unexpected_error
+
+  case $1 in
+    -h|--help) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+is_audio_file() {
+  [ $# -ne 1 ] && unexpected_error
+
+  case $1 in
+    *.aac|*.au|*.axa|*.flac|*.m4a|*.mid|*.midi|*.mka|*.mp3|*.mpc|*.oga|*.ogg|*.ra|*.spx|*.xspf|*.wav|*.wma) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+is_video_file() {
+  [ $# -ne 1 ] && unexpected_error
+
+  case $1 in
+    *.anx|*.asf|*.avi|*.axv|*.flc|*.fli|*.flv|*.gl|*.m2v|*.m4v|*.mkv|*.mov|*.MOV|*.mp4|*.mp4v|*.mpeg|*.mpg|*.nuv|*.ogm|*.ogv|*.ogx|*.qt |*.rm |*.rmvb|*.swf|*.vob|*.webm|*.wmv) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+###############################################################################
+# Convert functions
+###############################################################################
+
+convert_files_case() {
+  [ $# -gt 1 ] && unexpected_error
+
+  local _from
+  local _to
+  local _new_name
+  local _file
+
+  check_command "mv"
+  check_command "tr"
+
+  for _file in *; do
+    case $1 in
+      capitalize) _new_name="${_file^}" ;;
+      lowercase) _new_name="$(printf "%s\n" "$_file" | tr "[:upper:]" "[:lower:]")" ;;
+      uppercase) _new_name="$(printf "%s\n" "$_file" | tr "[:lower:]" "[:upper:]")" ;;
+      *) invalid_usage
+    esac
+
+    mv "$_file" "$_file.tmp"
+    mv "$_file.tmp" "$_new_name"
+  done
+}
+
+convert_audio_files() {
+  [ $# -eq 1 ] && is_help_option "$1" && print_help_audio && exit
+  [ $# -lt 2 ] && invalid_usage "audio"
+
+  check_command "mkdir"
+  check_command "ffmpeg"
+
+  local _from
+  local _to
+
+  while [ $# -ge 1 ]; do
+    case $1 in
+      -f|--from)
+        shift
+        _from=".$1"
+        shift
+        ;;
+      -t|--to)
+        shift
+        _to="$1"
+        shift
+        ;;
+      *) invalid_usage "audio"
+    esac
+  done
+
+  for _file in *"$_from"; do
+    if is_audio_file "$_file"; then
+      mkdir -p "$_to"
+      ffmpeg -i "$_file" -ab 320k -map_metadata 0 "$_to/${_file%.*}.$_to";
+    fi
+  done
+}
+
+convert_video_files() {
+  [ $# -eq 1 ] && is_help_option "$1" && print_help_video && exit
+  [ $# -lt 2 ] && invalid_usage "video"
+
+  check_command "ffmpeg"
+
+  local _from
+  local _to
+
+  while [ $# -ge 1 ]; do
+    case $1 in
+      -f|--from)
+        shift
+        _from=".$1"
+        shift
+        ;;
+      -t|--to)
+        shift
+        _to="$1"
+        shift
+        ;;
+      *) invalid_usage "video"
+    esac
+  done
+
+  for _file in *"$_from"; do
+    if is_video_file "$_file"; then
+      ffmpeg -i "$_file" -c copy "${_file%.*}.$_to"
+    fi
+  done
+}
+
+###############################################################################
+# Help menus
+###############################################################################
+
+print_help() {
+  cat <<EOF
+# USAGE
+$0 COMMAND [OPTIONS]
+$0 OPTION
+
+# DESCRIPTION
+This script helps you to quickly convert all files in directory in a different format.
+
+# COMMANDS
+  audio             Export audio files to another audio format.
+  capitalize        Capitalize first letter of all files in current directory..
+  lowercase         Rename all files in current directory to lowercase.
+  mp3               Export all audio files to mp3.
+  uppercase         Rename all files in current directory to uppercase.
+  video             Export video files to another video format.
+
+Note: Some commands accept options, you can use the command name followed by -h or --help to list them. If the message is "Invalid usage", so the command does not accept any options.
+
+# OPTIONS
+  -h, --help        Print this help.
+
+# ABOUT
+License             MIT
+Author              Armand Philippot
+EOF
+}
+
+print_help_audio() {
+  cat <<EOF
+# USAGE
+$0 audio OPTIONS
+
+# DESCRIPTION
+This command helps you to quickly convert all audio files in current directory to a different format.
+
+# OPTIONS
+  -f, --from        Input format.
+  -h, --help        Print this help.
+  -t, --to          Output format.
+
+# ABOUT
+License             MIT
+Author              Armand Philippot
+EOF
+}
+
+print_help_video() {
+  cat <<EOF
+# USAGE
+$0 video OPTIONS
+
+# DESCRIPTION
+This command helps you to quickly convert all video files in current directory to a different format.
+
+# OPTIONS
+  -f, --from        Input format.
+  -h, --help        Print this help.
+  -t, --to          Output format.
+
+# ABOUT
+License             MIT
+Author              Armand Philippot
+EOF
+}
+
+###############################################################################
+# Main
+###############################################################################
+
+main() {
+  [ $# -lt 1 ] && invalid_usage
+
+  case $1 in
+    audio)
+      shift
+      convert_audio_files "$@"
+      ;;
+    capitalize)
+      [ $# -gt 1 ] && invalid_usage
+      convert_files_case "$1"
+      ;;
+    lowercase)
+      [ $# -gt 1 ] && invalid_usage
+      convert_files_case "$1"
+      ;;
+    mp3)
+      [ $# -gt 1 ] && invalid_usage
+      convert_audio_files -t "$1"
+      ;;
+    uppercase)
+      [ $# -gt 1 ] && invalid_usage
+      convert_files_case "$1"
+      ;;
+    video)
+      shift
+      convert_video_files "$@"
+      ;;
+    -h|--help)
+      [ $# -gt 1 ] && invalid_usage
+      print_help
+      ;;
+    *) invalid_usage ;;
+  esac
+
+  exit
+}
+
+main "$@"
