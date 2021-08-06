@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+#
+# config_bash
+# Create missing paths and move bash files to XDG directories.
+# Depend on ./colors to print messages in colors. Make sure the file exists.
+#
+# Author: Armand Philippot <https://www.armandphilippot.com/>
+
+set -e
+
+configure_bash() {
+  info "Configuring Bash..."
+
+  local _bash_data_path="${XDG_DATA_HOME:-$HOME/.local/share}/bash"
+
+  if [ ! -d "$_bash_data_path" ]; then
+    info "Creating $_bash_data_path..."
+    mkdir -p "$_bash_data_path"
+  fi
+
+  if [ -e "$HOME/.bash_history" ]; then
+    info "Moving $HOME/.bash_history..."
+    mv "$HOME/.zprofile" "$_bash_data_path/history"
+  fi
+
+  # This variable may have already been declared so it is not very clean.
+  # But I will overwrite the files with my dotfiles so it is only temporary.
+  printf "\nexport HISTFILE=%s\n" "$_bash_data_path/history" >>"$HOME"/.bashrc
+
+  success "Bash configured!"
+}
+
+export -f configure_bash
