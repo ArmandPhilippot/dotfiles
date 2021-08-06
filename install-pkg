@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 #
+# install-pkg
 # Speed up new system configuration. Install packages and create needed paths.
+#
 # Author: Armand Philippot <https://www.armandphilippot.com/>
 
 set -e
 
 # shellcheck disable=SC1091
 source "./lib/colors"
+# shellcheck disable=SC1091
+source "./lib/helper_detect_system"
+# shellcheck disable=SC1091
+source "./lib/helper_check_packages"
 
 ###############################################################################
 # System packages
@@ -52,61 +58,6 @@ _optional=(figlet)
 
 # Global npm packages
 _npm_vscode=(ovsx vsce)
-
-###############################################################################
-# Helpers
-###############################################################################
-
-# Check if the current OS is GNU/Linux.
-is_linux() {
-    [ "$OSTYPE" = "linux-gnu" ]
-}
-
-# Check if the distribution is Manjaro.
-is_manjaro() {
-    if [ -f "/etc/os-release" ]; then
-        # shellcheck disable=SC1091
-        . "/etc/os-release"
-        [ "$ID" ] && [ "$ID" = "manjaro" ]
-    elif [ -f "/etc/lsb-release" ]; then
-        # shellcheck disable=SC1091
-        . "/etc/lsb-release"
-        [ "$DISTRIB_ID" ] && [ "$DISTRIB_ID" = "ManjaroLinux" ]
-    fi
-}
-
-# Check if the desktop environment is XFCE.
-is_xfce() {
-    [ "$DESKTOP_SESSION" = "xfce" ]
-}
-
-# Check if a package is already installed.
-is_package_installed() {
-    local _package=$1
-
-    if is_manjaro; then
-        pacman -Qq | grep -qw "$_package"
-    fi
-}
-
-# Check if a package exists in official repo.
-is_package_in_official_repo() {
-    local _package=$1
-
-    if is_manjaro; then
-        pacman -Ssq ^"$_package"$ 1>/dev/null
-    fi
-}
-
-# Check if a package exists in AUR.
-is_package_in_aur() {
-    yay -Ssq ^"$_package"$ 1>/dev/null
-}
-
-# Check if a npm package is already installed.
-is_npm_package_installed() {
-    npm list -g --depth=0 | grep "$1" 1>/dev/null
-}
 
 ###############################################################################
 # Handle packages install

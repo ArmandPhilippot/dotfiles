@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#
+# helper_system
+# Helpers to identify current operating system, distribution and desktop
+# environment.
+#
+# Author: Armand Philippot <https://www.armandphilippot.com/>
+
+set -e
+
+# Check if the current OS is GNU/Linux.
+is_linux() {
+  [ "$OSTYPE" = "linux-gnu" ]
+}
+
+# Check if the distribution is Manjaro.
+is_manjaro() {
+  if [ -f "/etc/os-release" ]; then
+    # shellcheck disable=SC1091
+    . "/etc/os-release"
+    [ "$ID" ] && [ "$ID" = "manjaro" ]
+  elif [ -f "/etc/lsb-release" ]; then
+    # shellcheck disable=SC1091
+    . "/etc/lsb-release"
+    [ "$DISTRIB_ID" ] && [ "$DISTRIB_ID" = "ManjaroLinux" ]
+  fi
+}
+
+# Check if the desktop environment is XFCE.
+is_xfce() {
+  [ "$DESKTOP_SESSION" = "xfce" ]
+}
+
+###############################################################################
+# Export
+###############################################################################
+export -f is_linux
+export -f is_manjaro
+export -f is_xfce

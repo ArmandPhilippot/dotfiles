@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+#
+# helper_packages
+# Helpers to check packages info (available/installed).
+# Depends on ./helper_system
+#
+# Author: Armand Philippot <https://www.armandphilippot.com/>
+
+set -e
+
+# Check if a package is already installed.
+is_package_installed() {
+  local _package=$1
+
+  if is_manjaro; then
+    pacman -Qq | grep -qw "$_package"
+  fi
+}
+
+# Check if a package exists in official repo.
+is_package_in_official_repo() {
+  local _package=$1
+
+  if is_manjaro; then
+    pacman -Ssq ^"$_package"$ 1>/dev/null
+  fi
+}
+
+# Check if a package exists in AUR.
+is_package_in_aur() {
+  yay -Ssq ^"$_package"$ 1>/dev/null
+}
+
+# Check if a npm package is already installed.
+is_npm_package_installed() {
+  npm list -g --depth=0 | grep "$1" 1>/dev/null
+}
+
+###############################################################################
+# Export
+###############################################################################
+export -f is_package_installed
+export -f is_package_in_official_repo
+export -f is_package_in_aur
+export -f is_npm_package_installed
