@@ -53,3 +53,6 @@ fi
 
 # Go
 export PATH="${XDG_BIN_HOME}/go:$PATH"
+
+# npm
+export PATH="${XDG_DATA_HOME}/npm/bin:$PATH"
