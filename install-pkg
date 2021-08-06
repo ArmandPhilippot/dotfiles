@@ -6,7 +6,7 @@
 set -e
 
 ###############################################################################
-# Packages
+# System packages
 ###############################################################################
 
 # Office
@@ -42,6 +42,13 @@ _emulator=(wine)
 
 # Packages not necessary. Mostly here as reminder in case I need them.
 _optional=(figlet)
+
+###############################################################################
+# Other packages
+###############################################################################
+
+# Global npm packages
+_npm_vscode=(ovsx vsce)
 
 ###############################################################################
 # Helpers
@@ -91,6 +98,11 @@ is_package_in_official_repo() {
 # Check if a package exists in AUR.
 is_package_in_aur() {
     yay -Ssq ^"$_package"$ 1>/dev/null
+}
+
+# Check if a npm package is already installed.
+is_npm_package_installed() {
+    npm list -g --depth=0 | grep "$1" 1>/dev/null
 }
 
 ###############################################################################
@@ -148,6 +160,21 @@ install_packages() {
     done
 }
 
+# Check if npm packages are already installed, if not install them.
+install_npm_packages() {
+    local _npm_packages=("$@")
+
+    if is_package_installed "npm"; then
+        for _npm_package in "${_npm_packages[@]}"; do
+            if ! is_npm_package_installed "$_npm_package"; then
+                npm install -g "$_npm_package"
+            else
+                printf "%s is already installed.\n" "$_npm_package"
+            fi
+        done
+    fi
+}
+
 ###############################################################################
 # Profiles
 ###############################################################################
@@ -162,6 +189,7 @@ common() {
 # Install packages for personal computer.
 perso() {
     install_packages "${_calendar[@]}" "${_cd_tools[@]}" "${_download[@]}" "${_ebooks[@]}" "${_emulator[@]}" "${_games[@]}" "${_music[@]}" "${_ntfs_support[@]}" "${_video_editor[@]}" "${_video_player[@]}" "${_virtualization[@]}"
+    install_npm_packages "${_npm_vscode[@]}"
 }
 
 ###############################################################################
