@@ -160,6 +160,15 @@ install_packages() {
         else
             skipped "$_package is already installed."
         fi
+
+        case $_package in
+        zsh)
+            # shellcheck disable=SC1091
+            source "./lib/config_zsh"
+            configure_zsh
+            ;;
+        *) : ;;
+        esac
     done
 }
 
@@ -205,8 +214,6 @@ perso() {
 create_paths() {
     mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/bash/"
     mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/nano/"
-    mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/"
-    mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/"
 }
 
 ###############################################################################
