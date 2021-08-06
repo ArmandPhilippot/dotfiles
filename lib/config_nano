@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#
+# config_nano
+# Create missing paths and move nano files to XDG directories.
+# Depend on ./colors to print messages in colors. Make sure the file exists.
+#
+# Author: Armand Philippot <https://www.armandphilippot.com/>
+
+set -e
+
+configure_nano() {
+  info "Configuring nano..."
+
+  local _nano_cache_path="${XDG_CACHE_HOME:-$HOME/.cache}/nano"
+
+  if [ ! -d "$_nano_cache_path" ]; then
+    info "Creating $_nano_cache_path..."
+    mkdir -p "$_nano_cache_path"
+  fi
+
+  success "nano configured!"
+}
+
+export -f configure_nano

@@ -162,6 +162,11 @@ install_packages() {
         fi
 
         case $_package in
+        nano)
+            # shellcheck disable=SC1091
+            source "./lib/config_nano"
+            configure_nano
+            ;;
         zsh)
             # shellcheck disable=SC1091
             source "./lib/config_zsh"
@@ -213,7 +218,6 @@ perso() {
 # Create missing directories.
 create_paths() {
     mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/bash/"
-    mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/nano/"
 }
 
 ###############################################################################
