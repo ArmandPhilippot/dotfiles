@@ -5,6 +5,9 @@
 
 set -e
 
+# shellcheck disable=SC1091
+source "./lib/colors"
+
 ###############################################################################
 # System packages
 ###############################################################################
@@ -135,10 +138,10 @@ alternative_install() {
         if is_package_in_aur; then
             yay -S --nocleanmenu --nodiffmenu "$_package"
         else
-            printf "Warning: %s not found!\n" "$_package"
+            warning "$_package not found!"
         fi
     else
-        printf "System not supported. Exit.\n"
+        error "System not supported. Exit"
         exit
     fi
 }
@@ -155,7 +158,7 @@ install_packages() {
                 alternative_install "$_package"
             fi
         else
-            printf "%s is already installed.\n" "$_package"
+            skipped "$_package is already installed."
         fi
     done
 }
@@ -169,7 +172,7 @@ install_npm_packages() {
             if ! is_npm_package_installed "$_npm_package"; then
                 npm install -g "$_npm_package"
             else
-                printf "%s is already installed.\n" "$_npm_package"
+                skipped "$_npm_package is already installed."
             fi
         done
     fi
@@ -226,7 +229,7 @@ EOF
 
 # Main entry point of the script.
 main() {
-    [ $# -ne 1 ] && printf "One argument and only one must be passed. See %s --help. Exit.\n" "$0" && exit
+    [ $# -ne 1 ] && error "One argument and only one must be passed. See $(option "-h") or $(option "--help") option. Exit" && exit
 
     case $1 in
     -h | --help)
@@ -240,12 +243,12 @@ main() {
     -w | --work)
         common
         ;;
-    *) printf "Invalid usage. Use -h or --help to print help.\n" ;;
+    *) error "Invalid usage. Use $(option "-h") or $(option "--help") to print help." ;;
     esac
 
     create_paths
 
-    printf "\nSuccess: all done!\n"
+    success "All done!"
 
     exit
 }

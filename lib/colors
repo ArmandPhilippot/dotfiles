@@ -2,6 +2,8 @@
 #
 # colors
 # Define colors and helpers to print message in color.
+#
+# Author: Armand Philippot <https://www.armandphilippot.com/>
 
 set -e
 
