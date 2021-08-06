@@ -36,7 +36,7 @@ _video_player=(smplayer smplayer-skins smplayer-themes vlc)
 
 # System
 _ntfs_support=(dosfstools exfat-utils ntfs-3g)
-_terminal=(alacritty bash-completion bat exa fzf zsh zsh-completions)
+_terminal=(alacritty bash bash-completion bat exa fzf zsh zsh-completions)
 _xfce_tools=(catfish mousepad ristretto xfce4-places-plugin xfce4-screenshooter xfce4-whiskermenu-plugin)
 
 # Others
@@ -162,6 +162,11 @@ install_packages() {
         fi
 
         case $_package in
+        bash)
+            # shellcheck disable=SC1091
+            source "./lib/config_bash"
+            configure_bash
+            ;;
         nano)
             # shellcheck disable=SC1091
             source "./lib/config_nano"
@@ -210,17 +215,6 @@ perso() {
 }
 
 ###############################################################################
-# Make sure all paths exist
-# XDG paths are used to relocate some files, so directories must exist in order
-# for files to be saved.
-###############################################################################
-
-# Create missing directories.
-create_paths() {
-    mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/bash/"
-}
-
-###############################################################################
 # Main
 ###############################################################################
 
@@ -256,8 +250,6 @@ main() {
         ;;
     *) error "Invalid usage. Use $(option "-h") or $(option "--help") to print help." ;;
     esac
-
-    create_paths
 
     success "All done!"
 
