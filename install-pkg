@@ -31,7 +31,7 @@ _text_editors=(libreoffice-fresh libreoffice-fresh-fr nano nano-syntax-highlight
 # Dev
 _apache=(apache php php-apache mariadb phpmyadmin)
 _design_tools=(gimp inkscape)
-_dev_tools=(code composer checkbashisms docker docker-compose filezilla go mkcert npm openssh poedit symfony-cli x11-ssh-askpass yarn)
+_dev_tools=(code composer checkbashisms docker docker-compose filezilla go mkcert npm openssh poedit symfony-cli x11-ssh-askpass yarn zeal)
 
 # Multimedia
 _ebooks=(calibre)
