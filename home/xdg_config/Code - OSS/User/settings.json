@@ -2,7 +2,7 @@
 	// General Settings
 	"editor.autoIndent": "full",
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true
+		"source.fixAll": true,
 	},
 	"editor.detectIndentation": true,
 	"editor.formatOnPaste": false,
@@ -32,10 +32,10 @@
 	"terminal.integrated.drawBoldTextInBrightColors": true,
 	"terminal.integrated.profiles.linux": {
 		"bash": {
-			"path": "/bin/bash"
+			"path": "/bin/bash",
 		},
 		"zsh": {
-			"path": "/bin/zsh"
+			"path": "/bin/zsh",
 		},
 	},
 	"terminal.integrated.defaultProfile.linux": "zsh",
@@ -43,7 +43,7 @@
 	"terminal.integrated.profiles.windows": {
 		"PowerShell": {
 			"source": "PowerShell",
-			"icon": "terminal-powershell"
+			"icon": "terminal-powershell",
 		},
 		"Command Prompt": {
 			"path": [
@@ -51,16 +51,16 @@
 				"${env:windir}\\System32\\cmd.exe"
 			],
 			"args": [],
-			"icon": "terminal-cmd"
+			"icon": "terminal-cmd",
 		},
 		"Git Bash": {
-			"source": "Git Bash"
+			"source": "Git Bash",
 		}
 	},
 	"terminal.integrated.defaultProfile.windows": "PowerShell",
 	"terminal.integrated.rendererType": "dom",
 	"window.newWindowDimensions": "maximized",
-	"workbench.colorTheme": "Coldark - Cold",
+	"workbench.colorTheme": "Coldark - Dark",
 	"workbench.editor.closeEmptyGroups": false,
 	"workbench.editor.highlightModifiedTabs": true,
 	"workbench.sideBar.location": "left",
@@ -87,17 +87,17 @@
 	// CSS
 	"css.validate": true,
 	"[css]": {
-		"editor.tabSize": 2
+		"editor.tabSize": 2,
 	},
 	// LESS
 	"less.validate": true,
 	"[less]": {
-		"editor.tabSize": 2
+		"editor.tabSize": 2,
 	},
 	// SCSS
 	"scss.validate": true,
 	"[scss]": {
-		"editor.tabSize": 2
+		"editor.tabSize": 2,
 	},
 	// Javascript
 	"javascript.autoClosingTags": true,
@@ -114,7 +114,7 @@
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 	},
 	"[javascriptreact]": {
-		"editor.tabSize": 2
+		"editor.tabSize": 2,
 	},
 	// JSON
 	"json.format.enable": true,
@@ -130,7 +130,7 @@
 	"[markdown]": {
 		"editor.wordWrap": "on",
 		"editor.quickSuggestions": false,
-		"files.trimTrailingWhitespace": false
+		"files.trimTrailingWhitespace": false,
 	},
 	// PHP
 	"php.suggest.basic": true,
@@ -139,7 +139,7 @@
 	"php.validate.run": "onSave",
 	"[php]": {
 		"editor.tabSize": 4,
-		"editor.defaultFormatter": "wongjn.php-sniffer"
+		"editor.defaultFormatter": "wongjn.php-sniffer",
 	},
 	// TypeScript
 	"typescript.autoClosingTags": true,
@@ -147,22 +147,22 @@
 	"typescript.suggest.enabled": true,
 	"typescript.validate.enable": true,
 	"[typescript]": {
-		"editor.tabSize": 2
+		"editor.tabSize": 2,
 	},
 	"[typescriptreact]": {
-		"editor.tabSize": 2
+		"editor.tabSize": 2,
 	},
 	// YAML
 	"[yaml]": {
 		"editor.insertSpaces": true,
 		"editor.tabSize": 2,
-		"editor.autoIndent": "advanced"
+		"editor.autoIndent": "advanced",
 	},
 	// Shell Script
 	"[shellscript]": {
 		"editor.insertSpaces": true,
 		"editor.tabSize": 2,
-		"files.eol": "\n"
+		"files.eol": "\n",
 	},
 	// Extensions Settings
 	// Code Runner
@@ -176,6 +176,7 @@
 		"Pico",
 		"Symfony",
 		"apcom",
+		"aria",
 		"armandphilippot",
 		"bloginfo",
 		"coldark",
@@ -188,6 +189,7 @@
 		"itemtype",
 		"keepachangelog",
 		"kses",
+		"labelledby",
 		"minmax",
 		"mixins",
 		"mkcert",
@@ -207,8 +209,10 @@
 	// Emmet
 	"emmet.includeLanguages": {
 		"twig": "html",
-		"smarty": "html"
+		"smarty": "html",
 	},
+	// Live Server
+	"liveServer.settings.host": "localhost",
 	// Path Intellisense
 	"path-intellisense.autoSlashAfterDirectory": true,
 	// PHP Intelephense
@@ -289,10 +293,9 @@
 	"intelephense.telemetry.enabled": false,
 	// PHP Sniffer
 	"phpSniffer.autoDetect": true,
-	"phpSniffer.standard": "WordPress",
 	// PHP CS Fixer
 	"php-cs-fixer.executablePath": "php-cs-fixer",
-	"php-cs-fixer.config": ".php_cs;.php_cs.xml.dist",
+	"php-cs-fixer.config": ".php_cs;.php_cs.dist;.php_cs.xml;.php_cs.xml.dist",
 	"php-cs-fixer.onsave": true,
 	// Prettier
 	"prettier.bracketSpacing": true,
