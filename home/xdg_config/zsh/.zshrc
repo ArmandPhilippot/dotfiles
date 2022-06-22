@@ -51,8 +51,20 @@ if [[ -d ${XDG_DATA_HOME}/phpenv ]]; then
     eval "$(phpenv init -)"
 fi
 
+# pnpm
+if [[ -d ${XDG_DATA_HOME}/pnpm ]]; then
+    export PATH="${XDG_DATA_HOME}/pnpm:$PATH"
+fi
+
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+
 # Go
 export PATH="${XDG_BIN_HOME}/go:$PATH"
 
 # npm
 export PATH="${XDG_DATA_HOME}/npm/bin:$PATH"
+
+# yarn
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
