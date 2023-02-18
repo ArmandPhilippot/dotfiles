@@ -3,36 +3,55 @@
 <action>
 	<icon>Terminal</icon>
 	<name>Terminal</name>
+	<submenu></submenu>
 	<unique-id>1367866030392833-1</unique-id>
 	<command>exo-open --working-directory %f --launch TerminalEmulator</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 </action>
 <action>
 	<icon>stock_folder</icon>
 	<name>Thunar Root</name>
+	<submenu></submenu>
 	<unique-id>1367866030392883-2</unique-id>
 	<command>pkexec thunar %f</command>
 	<description>Thunar Root</description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 </action>
 <action>
 	<icon>system-search</icon>
 	<name>Search</name>
+	<submenu></submenu>
 	<unique-id>1367866030392913-3</unique-id>
 	<command>catfish %f</command>
 	<description>find files and folders</description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 </action>
 <action>
 	<icon>Alacritty</icon>
 	<name>Open Alacritty</name>
+	<submenu></submenu>
 	<unique-id>1626791530250626-1</unique-id>
 	<command>alacritty --working-directory %f</command>
 	<description>Open Alacritty in the current directory.</description>
+	<range></range>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>com.visualstudio.code.oss</icon>
+	<name>Ouvrir dans Code</name>
+	<submenu></submenu>
+	<unique-id>1676552766508392-1</unique-id>
+	<command>code .</command>
+	<description>Ouvre le dossier dans VS Code.</description>
+	<range>*</range>
 	<patterns>*</patterns>
 	<directories/>
 </action>
