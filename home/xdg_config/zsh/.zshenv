@@ -15,6 +15,11 @@ export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
 export XDG_LIB_HOME=${XDG_LIB_HOME:="$HOME/.local/lib"}
 export XDG_STATE_HOME=${XDG_STATE_HOME:="$HOME/.local/state"}
 
+# Private env vars
+if [[ -f ${XDG_CONFIG_HOME}/sh/.tokens ]]; then
+  source ${XDG_CONFIG_HOME}/sh/.tokens
+fi
+
 # ZSH Config
 export ZDOTDIR="${HOME}/.config/zsh"               # Zsh config path
 export HISTFILE="${HOME}/.local/share/zsh/history" # History filepath
