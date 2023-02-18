@@ -57,6 +57,7 @@
     }
   },
   "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
   "workbench.colorTheme": "Coldark - Cold",
   "workbench.editor.closeEmptyGroups": false,
@@ -128,12 +129,20 @@
   // Markdown
   "[markdown]": {
     "editor.wordWrap": "on",
-    "editor.quickSuggestions": false,
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    },
     "files.trimTrailingWhitespace": false,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[mdx]": {
-    "editor.quickSuggestions": false,
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    },
     "editor.wordWrap": "on",
     "files.trimTrailingWhitespace": false
   },
@@ -172,58 +181,13 @@
     "files.eol": "\n"
   },
   "[vue]": {
-    "editor.defaultFormatter": "johnsoncodehk.volar"
+    "editor.defaultFormatter": "Vue.volar"
   },
   // Extensions Settings
   // Code Runner
   "code-runner.enableAppInsights": false,
   // cSpell
   "cSpell.enableFiletypes": ["twig"],
-  "cSpell.userWords": [
-    "ABSPATH",
-    "apcom",
-    "aria",
-    "armandphilippot",
-    "bloginfo",
-    "browserslist",
-    "coldark",
-    "commitlint",
-    "datetime",
-    "dircolors",
-    "gedit",
-    "gifsicle",
-    "Gitlab",
-    "htdocs",
-    "itemprop",
-    "itemscope",
-    "itemtype",
-    "keepachangelog",
-    "kses",
-    "labelledby",
-    "lingui",
-    "Manjaro",
-    "minmax",
-    "mixins",
-    "mkcert",
-    "mozjpeg",
-    "muplugin",
-    "optipng",
-    "pacman",
-    "philippot",
-    "phpcs",
-    "phpmyadmin",
-    "Pico",
-    "rtlcss",
-    "setfacl",
-    "stylelint",
-    "submodule",
-    "svgr",
-    "Symfony",
-    "traefik",
-    "vsce",
-    "wcag",
-    "wp"
-  ],
   // Emmet
   "emmet.includeLanguages": {
     "twig": "html",
@@ -323,10 +287,13 @@
   "twig-language-2.indentStyle": "space",
   "twig-language-2.spaceClose": true,
   "twig-language-2.tabSize": 4,
-  "sonarlint.ls.javaHome": "/home/armand/.vscode-oss/extensions/sonarsource.sonarlint_managed-jre/jre/jdk-11.0.13+8-jre",
+  "sonarlint.ls.javaHome": "/usr/lib/jvm/java-19-openjdk/",
   "sonarlint.rules": {
     "php:S101": {
       "level": "off"
     }
-  }
+  },
+  "projectManager.git.baseFolders": [
+    "/home/armand/Dev/Repo"
+  ],
 }
