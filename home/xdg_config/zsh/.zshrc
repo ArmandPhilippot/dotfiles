@@ -9,6 +9,9 @@
 # Make sure the ZSH data directory exists
 [ -d "$XDG_DATA_HOME/zsh" ] || mkdir -p "$XDG_DATA_HOME/zsh"
 
+# Make sure the nano cache directory exists
+[ -d "$XDG_CACHE_HOME/nano" ] || mkdir -p "$XDG_CACHE_HOME/nano"
+
 # Includes
 for includes ($ZDOTDIR/includes/*.zsh); do
     source $includes
