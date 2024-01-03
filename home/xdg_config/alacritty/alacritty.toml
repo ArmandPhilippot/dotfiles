@@ -1,0 +1,75 @@
+live_config_reload = true
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.bright]
+black = "#8da1b9"
+blue = "#6cb8e6"
+cyan = "#66cccc"
+green = "#91d076"
+magenta = "#f4adf4"
+red = "#cd6660"
+white = "#f0f4f8"
+yellow = "#e6d37a"
+
+[colors.normal]
+black = "#111b27"
+blue = "#6cb8e6"
+cyan = "#66cccc"
+green = "#91d076"
+magenta = "#f4adf4"
+red = "#cd6660"
+white = "#e3eaf2"
+yellow = "#e6d37a"
+
+[colors.primary]
+background = "#111b27"
+bright_foreground = "#e3eaf2"
+foreground = "#e3eaf2"
+
+[colors.selection]
+background = "#3c526d"
+text = "CellForeground"
+
+[cursor]
+unfocused_hollow = true
+
+[cursor.style]
+blinking = "Off"
+shape = "Block"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 11.0
+
+[font.bold]
+family = "Liberation Mono"
+
+[font.bold_italic]
+family = "Liberation Mono"
+
+[font.italic]
+family = "Liberation Mono"
+
+[font.normal]
+family = "Liberation Mono"
+
+[mouse]
+hide_when_typing = true
+
+[window]
+dynamic_padding = false
+dynamic_title = true
+opacity = 0.95
+startup_mode = "Windowed"
+
+[window.dimensions]
+columns = 85
+lines = 25
+
+[window.padding]
+x = 10
+y = 10
