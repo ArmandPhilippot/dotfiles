@@ -57,6 +57,7 @@
     }
   },
   "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.scrollback": 10000,
   "window.autoDetectColorScheme": true,
   "window.newWindowDimensions": "maximized",
   "workbench.colorTheme": "Coldark - Cold",
@@ -138,11 +139,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[mdx]": {
-    "editor.quickSuggestions": {
-      "comments": "off",
-      "strings": "off",
-      "other": "off"
-    },
     "editor.wordWrap": "on",
     "files.trimTrailingWhitespace": false
   },
@@ -187,7 +183,7 @@
   // Code Runner
   "code-runner.enableAppInsights": false,
   // cSpell
-  "cSpell.enableFiletypes": ["twig"],
+  "cSpell.enableFiletypes": ["mdx", "twig"],
   // Emmet
   "emmet.includeLanguages": {
     "twig": "html",
@@ -287,10 +283,13 @@
   "twig-language-2.indentStyle": "space",
   "twig-language-2.spaceClose": true,
   "twig-language-2.tabSize": 4,
-  "sonarlint.ls.javaHome": "/usr/lib/jvm/java-19-openjdk/",
+  "sonarlint.ls.javaHome": "/usr/lib/jvm/java-21-openjdk/",
   "sonarlint.rules": {
     "php:S101": {
       "level": "off"
+    },
+    "typescript:S4123": {
+      "level": "off" // Too many false positive...
     }
   },
   "projectManager.git.baseFolders": [
