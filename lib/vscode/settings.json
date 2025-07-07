@@ -1,0 +1,113 @@
+{
+  "breadcrumbs.enabled": true,
+  "breadcrumbs.filePath": "on",
+  "breadcrumbs.icons": true,
+  "editor.autoClosingBrackets": "always",
+  "editor.autoClosingComments": "always",
+  "editor.autoClosingQuotes": "always",
+  "editor.autoIndent": "full",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.sort.json": "never"
+  },
+  "editor.detectIndentation": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "modificationsIfAvailable",
+  "editor.insertSpaces": true,
+  "editor.lineNumbers": "on",
+  "editor.matchBrackets": "always",
+  "editor.renderControlCharacters": true,
+  "editor.renderFinalNewline": "on",
+  "editor.renderWhitespace": "all",
+  "editor.rulers": [80],
+  "editor.semanticHighlighting.enabled": true,
+  "editor.showDeprecated": true,
+  "editor.showUnused": true,
+  "editor.tabCompletion": "on",
+  "editor.tabSize": 4,
+  "editor.unicodeHighlight.ambiguousCharacters": true,
+  "editor.unicodeHighlight.includeComments": true,
+  "editor.unicodeHighlight.includeStrings": true,
+  "editor.unicodeHighlight.invisibleCharacters": true,
+  "editor.wordWrap": "bounded",
+  "editor.wordWrapColumn": 80,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 5000,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "security.workspace.trust.enabled": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "telemetry.feedback.enabled": false,
+  "telemetry.telemetryLevel": "off",
+  "window.autoDetectColorScheme": true,
+  "window.closeWhenEmpty": false,
+  "window.restoreFullscreen": true,
+  "workbench.colorTheme": "Coldark - Cold",
+  "workbench.editor.closeEmptyGroups": false,
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.iconTheme": "vs-seti",
+  "workbench.preferredDarkColorTheme": "Coldark - Dark",
+  // Extensions
+  "liveServer.settings.NoBrowser": true,
+  "projectManager.ignoreProjectsWithinProjects": true,
+  "projectManager.git.baseFolders": ["/home/armand/Dev/repo/"],
+  "redhat.telemetry.enabled": false,
+  // Languages settings
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    // Global settings are not used, we need to repeat them...
+    "editor.unicodeHighlight.ambiguousCharacters": true,
+    "editor.unicodeHighlight.includeComments": true,
+    "editor.unicodeHighlight.includeStrings": true,
+    "editor.unicodeHighlight.invisibleCharacters": true,
+    "files.trimTrailingWhitespace": false
+  },
+  "[mdx]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "files.trimTrailingWhitespace": false
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[shellscript]": {
+    "files.eol": "\n",
+    "editor.defaultColorDecorators": "never",
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json5]": {
+    "editor.defaultFormatter": "BlueGlassBlock.better-json5"
+  },
+  "workbench.preferredLightColorTheme": "Coldark - Cold"
+}

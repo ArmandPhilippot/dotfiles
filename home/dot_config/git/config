@@ -1,0 +1,23 @@
+[alias]
+	br = branch
+	co = checkout
+	cob = checkout -b
+	cm = commit -m
+	amend = commit --amend
+	pam = push all main
+	pom = push origin main
+	puam = push -u all main
+	puom = push -u origin main
+	clog = log --pretty=format:\"%C(cyan)%h%Creset%C(yellow)%d%Creset on %C(magenta)%ad%Creset by %Cblue%an%Creset%n%Cgreen%s%Creset %n\" --date=short --graph
+	cor = commit -eF .git/COMMIT_EDITMSG
+[commit]
+	template = ~/.config/git/gitmessage
+[color]
+	ui = true
+[init]
+	defaultBranch = main
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[include]
+	# Include user-specific info like git user.
+	path = config.private

@@ -1,0 +1,74 @@
+# .zshrc
+#
+# Sourced in interactive shells. Contains commands to set up aliases,
+# functions, options, key bindings, etc.
+
+# Make sure the ZSH cache directory exists
+[ -d "$XDG_CACHE_HOME/zsh" ] || mkdir -p "$XDG_CACHE_HOME/zsh"
+
+# Make sure the ZSH data directory exists
+[ -d "$XDG_DATA_HOME/zsh" ] || mkdir -p "$XDG_DATA_HOME/zsh"
+
+# Includes
+for includes ($ZDOTDIR/includes/*.zsh); do
+    source $includes
+done
+
+# Functions
+for file ($ZDOTDIR/functions/*.zsh); do
+    source $file
+done
+
+# Plugins
+for plugin ($ZSH_PLUGINS); do
+    if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/$plugin.zsh" ]; then
+        source ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/$plugin.zsh
+    fi
+done
+
+# Themes
+if [ ! "$ZSH_THEME" = ""  ]; then
+    if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/themes/$ZSH_THEME.zsh-theme" ]; then
+        source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/themes/$ZSH_THEME.zsh-theme"
+    fi
+fi
+
+# Add XDG BIN DIR to PATH
+if [[ -d ${XDG_BIN_HOME} ]]; then
+    export PATH="${XDG_BIN_HOME}:$PATH"
+fi
+
+# Docker
+export PATH="${XDG_BIN_HOME}/docker:$PATH"
+
+# Fzf
+if [ $(command -v "fzf") ]; then
+    source /usr/share/fzf/completion.zsh
+    source /usr/share/fzf/key-bindings.zsh
+fi
+
+# Nano - Make sure the nano cache directory exists
+[ -d "$XDG_CACHE_HOME/nano" ] || mkdir -p "$XDG_CACHE_HOME/nano"
+
+# npm - Make sure the npm data directory exists
+[ -d "$XDG_DATA_HOME/npm" ] || mkdir -p "$XDG_DATA_HOME/npm"
+
+# nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# phpenv
+if [[ -d "${XDG_DATA_HOME}/phpenv" ]]; then
+    export PATH="${XDG_DATA_HOME}/phpenv/bin:$PATH"
+    eval "$(phpenv init -)"
+fi
+
+# pnpm
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Turso
+export PATH="$PATH:${XDG_DATA_HOME}/turso"
