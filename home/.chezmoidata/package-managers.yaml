@@ -1,0 +1,9 @@
+package_managers:
+  linux:
+    arch: "sudo pacman -Sy --needed --noconfirm"
+    debian: "sudo apt-get update && sudo apt-get install -y"
+    fedora: "sudo dnf install -y"
+  darwin:
+    default: "brew install"
+  windows:
+    default: "choco install -y"

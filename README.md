@@ -8,17 +8,11 @@ My personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).
 chezmoi init ArmandPhilippot
 ```
 
-## Binaries
-
-The `install-pkg` script at the repository root allows me to install all the packages that I use frequently. It also creates missing directories to be XDG compliant.
-
-In `./home/xdg_bin`:
-
-* `convto`: to quickly convert all files in the current directory (different operations are supported)
-* `dotig`: my dotfiles manager
-* `fuzbat`: used as a note-taking app from terminal
-* `new-vhost`: to quickly create a new virtual host with a local cert on Manjaro
-* `schemer2`: generate a color palette from a source image
+You'll be asked to fill in some information in order to apply the dotfiles and install the packages:
+* the profile to load (to determine the packages to install)
+* your full name (used with Git)
+* the email you use with Git
+* the GPG signing key to use with this email
 
 ## Philosophy
 

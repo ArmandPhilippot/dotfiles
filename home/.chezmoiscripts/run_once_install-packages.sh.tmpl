@@ -1,0 +1,120 @@
+#!/bin/bash
+set -euo pipefail
+
+{{ $os := .chezmoi.os -}}
+{{- $distro := .chezmoi.osRelease.idLike | default .chezmoi.osRelease.id -}}
+{{- $desktop := env "XDG_CURRENT_DESKTOP" | default "unknown" | lower -}}
+
+echo "==> Installing packages for profile: {{ .profile }} (OS: {{ $os }}, distro: {{ $distro }}, desktop: {{ $desktop }})"
+
+{{/* Determine which package data to use based on OS */ -}}
+{{- $packages := dict -}}
+{{- $packageManagerConfig := dict -}}
+
+{{- if eq $os "linux" -}}
+  {{- $packages = .packages_linux -}}
+  {{- $packageManagerConfig = index .package_managers.linux $distro -}}
+{{- else if eq $os "darwin" -}}
+  {{- $packages = .packages_macos -}}
+  {{- $packageManagerConfig = .package_managers.darwin.default -}}
+{{- else if eq $os "windows" -}}
+  {{- $packages = .packages_windows -}}
+  {{- $packageManagerConfig = .package_managers.windows.default -}}
+{{- else -}}
+  echo "Unsupported OS: {{ $os }}"
+  exit 1
+{{- end -}}
+
+{{- if not $packages -}}
+  echo "No package configuration found for {{ $os }}"
+  exit 1
+{{- end -}}
+
+{{- if not $packageManagerConfig -}}
+  echo "No package manager configuration found for {{ $os }}/{{ $distro }}"
+  exit 1
+{{- end -}}
+
+{{- /* Collect all packages to install */ -}}
+{{- $packagesToInstall := list -}}
+
+{{- /* Load package groups for this profile */ -}}
+{{- $groups := index .profiles .profile -}}
+
+{{- /* Add desktop-specific group if relevant (Linux only) */ -}}
+{{- if and (eq $os "linux") (eq $desktop "xfce") -}}
+  {{- $groups = append $groups "xfce" -}}
+{{- end -}}
+
+{{- /* Add arch-specific group if relevant */ -}}
+{{- if and (eq $os "linux") (eq $distro "arch") -}}
+  {{- $groups = append $groups "arch" -}}
+{{- end -}}
+
+{{- /* Iterate over each group of packages */}}
+{{- range $group := $groups -}}
+  {{- $pkgList := index $packages $group -}}
+  {{- if not $pkgList -}}
+    echo "Warning: package group '{{ $group }}' not found for {{ $os }}"
+  {{- else -}}
+    {{- range $pkg := $pkgList -}}
+      {{- $name := "" -}}
+      {{- $distros := list -}}
+      {{- $desktops := list -}}
+
+      {{- if typeIs "string" $pkg -}}
+        {{- $name = $pkg -}}
+      {{- else -}}
+        {{- $name = $pkg.name -}}
+        {{- if hasKey $pkg "distros" -}}
+          {{- $distros = $pkg.distros -}}
+        {{- end -}}
+        {{- if hasKey $pkg "de" -}}
+          {{- $desktops = $pkg.de -}}
+        {{- end -}}
+      {{- end -}}
+
+      {{- /* For Linux, check distro and desktop filters */ -}}
+      {{- $shouldInstall := true -}}
+      {{- if eq $os "linux" -}}
+        {{/* Check distro filter */}}
+        {{- if gt (len $distros) 0 -}}
+          {{- $shouldInstall = false -}}
+          {{- range $d := $distros -}}
+            {{- if eq $d $distro -}}
+              {{- $shouldInstall = true -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+
+        {{- /* Check desktop environment filter */ -}}
+        {{- if and $shouldInstall (gt (len $desktops) 0) -}}
+          {{- $shouldInstall = false -}}
+          {{- range $de := $desktops -}}
+            {{- if eq $de $desktop -}}
+              {{- $shouldInstall = true -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+
+      {{- if $shouldInstall -}}
+        {{- if not (has $name $packagesToInstall) -}}
+          {{- $packagesToInstall = append $packagesToInstall $name -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end}}
+
+{{/* Install all packages in one command */}}
+{{- if $packagesToInstall -}}
+echo "Packages to install: {{ join " " $packagesToInstall }}"
+echo "Using package manager: {{ $packageManagerConfig }}"
+
+{{ $packageManagerConfig }} {{ join " " $packagesToInstall }}
+
+echo "==> Package installation completed successfully!"
+{{- else -}}
+echo "No packages to install for this configuration."
+{{- end -}}

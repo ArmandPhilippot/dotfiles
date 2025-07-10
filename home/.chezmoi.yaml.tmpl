@@ -1,3 +1,4 @@
+{{- $profile := promptStringOnce . "profile" "Profile (personal, work, vps):" -}}
 {{- $name := promptStringOnce . "name" "Full name:" -}}
 {{- $gitEmail := promptStringOnce . "gitEmail" "Email address for git:" -}}
 {{- $signingKey := promptStringOnce . "signingKey" "Signing key:" -}}
@@ -14,4 +15,5 @@ persistentState: "{{ .chezmoi.homeDir }}/AppData/Local/chezmoi/chezmoi.boltdb"
 data:
   gitEmail: {{ $gitEmail | quote }}
   name: {{ $name | quote }}
+  profile: {{ $profile | quote }}
   signingKey: {{ $signingKey | quote }}
