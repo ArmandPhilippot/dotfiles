@@ -1,0 +1,55 @@
+#!/bin/zsh
+#
+# aliases.zsh
+#
+# Used to define ZSH aliases.
+
+# Confirm before overwriting something.
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -i'
+
+# ls
+alias ls='ls --color=auto'
+alias ll='ls -lahF'
+alias la='ls -A'
+
+# grep
+alias grep='grep --colour=auto'
+alias egrep='egrep --colour=auto'
+alias fgrep='fgrep --colour=auto'
+
+# pacman
+alias paci='sudo pacman -S'                    # Install
+alias pacs='sudo pacman -Ss'                   # Search
+alias pacu='sudo pacman -Syu'                  # Update
+alias pacr='sudo pacman -R'                    # Remove package
+alias pacrs='sudo pacman -Rs'                  # Remove package and unused dependencies
+alias pacrsn='sudo pacman -Rsn'                # Remove package, unused dependencies and config
+alias pacro='sudo pacman -Rns $(pacman -Qtdq)' # Remove orphans
+alias pacc='sudo pacman -Sc'                   # Clear cache
+alias paccc='sudo pacman -Scc'                 # Clear all cache
+
+# yay
+alias yayi='yay -S'      # Install
+alias yays='yay -Ss'     # Search
+alias yayu='yay -Syu'    # Update
+alias yayr='yay -R'      # Remove package
+alias yayrs='yay -Rs'    # Remove package and unused dependencies
+alias yayrsn='yay -Rsn'  # Remove package, unused dependencies and config
+alias yayc='yay -Sc'     # Clear cache
+alias yayc='yay -Scc'    # Clear all cache
+
+# systemd
+alias sc-start='sudo systemctl start'
+alias sc-restart='sudo systemctl restart'
+alias sc-stop='sudo systemctl stop'
+alias sc-enable='sudo systemctl enable'
+alias sc-reload='sudo systemctl reload'
+alias sc-status='sudo systemctl status'
+alias sc-active='sudo systemctl is-active'
+alias sc-failed='sudo systemctl is-failed'
+alias sc-kill='sudo systemctl kill'
+
+# zsh
+alias zsh-reload='source $HOME/.zshenv && source ${ZDOTDIR:-$HOME}/.zshrc'

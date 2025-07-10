@@ -1,0 +1,114 @@
+packages_linux:
+  audio-edition:
+    #- asunder
+
+  audio-player:
+    - quodlibet
+    - name: python-musicbrainzngs
+      distros: ["arch"]
+    - name: python-pyinotify
+      distros: ["arch"]
+
+  auth:
+    - keepassxc
+    - x11-ssh-askpass
+
+  cli:
+    - zsh
+    - bash-completion
+    - zsh-autosuggestions
+    - zsh-completions
+    - zsh-syntax-highlighting
+    - bat
+    - eza
+    - fzf
+    - nano
+    - nano-syntax-highlighting
+    - openssh
+    - vim
+
+  desktop-utils:
+    - darkman
+    - redshift
+    - conky
+
+  dev:
+    - git
+    - code
+    - npm
+    - mkcert
+    - zeal
+    - filezilla
+
+  filesystem-support:
+    - dosfstools
+    - ntfs-3g
+
+  games:
+    - steam
+    - steam-native-runtime
+    - lutris
+    - dosbox
+    - name: wine
+      distros: ["arch"]
+
+  graphics:
+    - gimp
+    - inkscape
+
+  office:
+    - alacritty
+    - chromium
+    - firefox
+    - name: firefox-i18n-fr
+      distros: ["arch"]
+    - speech-dispatcher
+    - libreoffice-fresh
+    - name: nextcloud-client
+      distros: ["arch"]
+    - gnome-keyring # Needed for Nextcloud auto-logging
+    - thunderbird
+    - name: galculator
+      de: ["gnome", "xfce"]
+
+  reading:
+    - calibre
+
+  social:
+    - discord
+
+  video-edition:
+    - peek
+    - gifski
+    - pitivi
+    - frei0r-plugins
+
+  video-player:
+    - vlc
+    - smplayer
+    - smplayer-skins
+    - smplayer-themes
+
+  arch:
+    - pacman-contrib
+    - yay
+
+  xfce:
+    - catfish
+    #- xfburn
+    - thunar-archive-plugin
+    - thunar-media-tags-plugin
+    - xfce4-appfinder
+    - xfce4-clipman-plugin
+    - xfce4-datetime-plugin
+    - xfce4-notes-plugin
+    - xfce4-places-plugin
+    - xfce4-power-manager
+    - xfce4-screenshooter
+    - xfce4-whiskermenu-plugin
+    - xfce4-xkb-plugin
+
+  # Optional non-categorized packages - mostly there as reminder if needed
+  misc:
+    - fastfetch
+    - figlet

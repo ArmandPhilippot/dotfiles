@@ -1,0 +1,25 @@
+profiles:
+  personal:
+    - audio-player
+    - auth
+    - cli
+    - desktop-utils
+    - dev
+    - filesystem-support
+    - games
+    - graphics
+    - office
+    - reading
+    - social
+    - video-edition
+    - video-player
+
+  work:
+    - auth
+    - cli
+    - dev
+    - graphics
+    - office
+
+  vps:
+    - cli
