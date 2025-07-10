@@ -2,6 +2,18 @@
 
 My personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).
 
+## Prerequisites
+
+* `chezmoi` [installed on your machine](https://www.chezmoi.io/install/)
+
+## Profiles
+
+The profiles determine which packages to install when applying the dotfiles. You can find categories included in each profiles in `home/.chezmoidata/profiles.yaml`.
+
+* `personal`: setup including all packages I find useful for my personal PC
+* `work`: setup including useful packages for work (a subset of `personal`)
+* `vps`: minimal setup including useful CLI packages
+
 ## Install
 
 ```sh
@@ -46,11 +58,10 @@ I try to comply to the [XDG Base Directory specification](http://standards.freed
 
 For most of the dotfiles, I don't see the interest to put them under a license so you can do whatever you want with them.
 
-There are some exception:
+There are some exceptions:
 
 * convto is licensed under the MIT license
 * new-vhost is licensed under the MIT license
 * fuzbat is only adapted by me so the credit goes to [Casey Brant](https://caseybrant.com/). I don't see a license but maybe I'm wrong.
-* schemer2 is not mine so the credit goes to [Daniel Byron](https://github.com/thefryscorer/schemer2). Again, I don't see a license but maybe I'm wrong.
 * the various Git submodules include their own license:
     * [nvm](https://github.com/nvm-sh/nvm) is licensed under the MIT license
