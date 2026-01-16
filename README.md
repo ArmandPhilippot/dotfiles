@@ -28,31 +28,13 @@ You'll be asked to fill in some information in order to apply the dotfiles and i
 
 ## Philosophy
 
-### Why?
-
-For the same reasons described on: https://dotfiles.github.io/
+Why? For the same reasons described on: https://dotfiles.github.io/
 
 > Why would I want my dotfiles on GitHub?
 >
 >* **_Backup_**, **_restore_**, and **_sync_** the prefs and settings for your toolbox. Your dotfiles might be the most important files on your machine.
 >* **_Learn_** from the community. Discover new tools for your toolbox and new tricks for the ones you already use.
 >* **_Share_** what you’ve learned with the rest of us.
-
-### Structure
-
-The dotfiles reside in the `home` directory of this repository.
-
-I try to comply to the [XDG Base Directory specification](http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html) as much as possible to limit the amount of files in `$HOME`. I'm also using some unofficial XDG variables following the [Home directory hierarchy](https://www.freedesktop.org/software/systemd/man/file-hierarchy.html#Home%20Directory).
-
-|Var|Repo|Linux|Description|
-|---|---|---|---|
-|`HOME`|`./home`|`~/`|Other files in `$HOME`|
-|`XDG_BIN_HOME`|`./home/dot_bin/`|`~/.local/bin`|Binaries (Unofficial)|
-|`XDG_CACHE_HOME`|`./home/dot_cache/`|`~/.cache`|Cache|
-|`XDG_CONFIG_HOME`|`./home/dot_config/`|`~/.config`|Config|
-|`XDG_DATA_HOME`|`./home/dot_data/`|`~/.local/share`|Data|
-|`XDG_LIB_HOME`|`./home/dot_lib/`|`~/.local/lib`|Libraries (Unofficial)|
-|`XDG_STATE_HOME`|`./home/dot_state/`|`~/.local/state`|State|
 
 ## Licenses
 
