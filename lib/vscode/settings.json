@@ -9,7 +9,7 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
-    "source.sort.json": "never"
+    "source.sort.json": "never",
   },
   "editor.detectIndentation": true,
   "editor.formatOnSave": true,
@@ -25,7 +25,7 @@
   "editor.showDeprecated": true,
   "editor.showUnused": true,
   "editor.tabCompletion": "on",
-  "editor.tabSize": 4,
+  "editor.tabSize": 2,
   "editor.unicodeHighlight.ambiguousCharacters": true,
   "editor.unicodeHighlight.includeComments": true,
   "editor.unicodeHighlight.includeStrings": true,
@@ -41,73 +41,81 @@
   "security.workspace.trust.untrustedFiles": "open",
   "telemetry.feedback.enabled": false,
   "telemetry.telemetryLevel": "off",
+  "terminal.integrated.stickyScroll.enabled": false,
   "window.autoDetectColorScheme": true,
   "window.closeWhenEmpty": false,
   "window.restoreFullscreen": true,
   "workbench.colorTheme": "Coldark - Cold",
+  "workbench.editorAssociations": {
+    "*.svg": "default",
+  },
   "workbench.editor.closeEmptyGroups": false,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.iconTheme": "vs-seti",
   "workbench.preferredDarkColorTheme": "Coldark - Dark",
+  "workbench.preferredLightColorTheme": "Coldark - Cold",
   // Extensions
+  "biome.suggestInstallingGlobally": false,
   "liveServer.settings.NoBrowser": true,
   "projectManager.ignoreProjectsWithinProjects": true,
   "projectManager.git.baseFolders": ["/home/armand/Dev/repo/"],
   "redhat.telemetry.enabled": false,
   // Languages settings
   "[astro]": {
-    "editor.defaultFormatter": "astro-build.astro-vscode"
+    "editor.defaultFormatter": "astro-build.astro-vscode",
   },
   "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "prettier.prettier-vscode",
+  },
+  "[dockercompose]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
   },
   "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "prettier.prettier-vscode",
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "prettier.prettier-vscode",
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "prettier.prettier-vscode",
+  },
+  "[json5]": {
+    "editor.defaultFormatter": "BlueGlassBlock.better-json5",
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "prettier.prettier-vscode",
   },
   "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "prettier.prettier-vscode",
     // Global settings are not used, we need to repeat them...
     "editor.unicodeHighlight.ambiguousCharacters": true,
     "editor.unicodeHighlight.includeComments": true,
     "editor.unicodeHighlight.includeStrings": true,
     "editor.unicodeHighlight.invisibleCharacters": true,
-    "files.trimTrailingWhitespace": false
+    "files.trimTrailingWhitespace": false,
   },
   "[mdx]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "files.trimTrailingWhitespace": false
+    "editor.defaultFormatter": "prettier.prettier-vscode",
+    "files.trimTrailingWhitespace": false,
   },
   "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "prettier.prettier-vscode",
   },
   "[shellscript]": {
     "files.eol": "\n",
     "editor.defaultColorDecorators": "never",
-    "editor.defaultFormatter": "foxundermoon.shell-format"
+    "editor.defaultFormatter": "foxundermoon.shell-format",
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "prettier.prettier-vscode",
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "prettier.prettier-vscode",
   },
   "[xml]": {
-    "editor.defaultFormatter": "redhat.vscode-xml"
+    "editor.defaultFormatter": "redhat.vscode-xml",
   },
   "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "prettier.prettier-vscode",
   },
-  "[json5]": {
-    "editor.defaultFormatter": "BlueGlassBlock.better-json5"
-  },
-  "workbench.preferredLightColorTheme": "Coldark - Cold"
 }
