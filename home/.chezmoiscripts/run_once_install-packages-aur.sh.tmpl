@@ -1,0 +1,26 @@
+#!/bin/bash
+set -euo pipefail
+
+{{ $os := .chezmoi.os -}}
+{{- $distro := .chezmoi.osRelease.idLike | default .chezmoi.osRelease.id -}}
+{{- $matchProfile := or (eq .profile "work") (eq .profile "personal") -}}
+{{- $matchSystem := and (eq $os "linux") (eq $distro "arch") -}}
+
+{{- if (and ($matchProfile) ($matchSystem)) -}}
+echo "==> Installing AUR packages"
+
+if ! command -v yay >/dev/null 2>&1; then
+  echo "yay not found, skipping AUR packages"
+  exit 0
+fi
+
+{{ range .packages_aur }}
+if ! pacman -Qq {{ . | quote }} >/dev/null 2>&1; then
+  yay -S --noconfirm {{ . | quote }}
+else
+  echo "Skipping {{ . | quote }} (already installed)"
+fi
+{{ end }}
+
+echo "==> AUR packages installed"
+{{- end -}}
