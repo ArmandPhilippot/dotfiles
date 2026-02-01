@@ -1,0 +1,19 @@
+#!/bin/bash
+set -euo pipefail
+
+{{ $enableSystemd := or (eq .profile "work") (eq .profile "personal") -}}
+
+{{- if (and (eq .chezmoi.os "linux") (stat "/run/systemd/system") $enableSystemd) -}}
+echo "==> Enabling systemd user services..."
+systemctl --user daemon-reload
+
+services="
+ssh-agent.service
+darkman.service
+"
+
+for svc in $services; do
+  systemctl --user enable --now "$svc" >/dev/null 2>&1 || true
+done
+echo "==> Systemd user services enabled successfully!"
+{{- end -}}
