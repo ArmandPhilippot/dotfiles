@@ -46,7 +46,6 @@ packages_linux:
 
   games:
     - steam
-    - steam-native-runtime
     - lutris
     - dosbox
     - name: wine
@@ -95,6 +94,8 @@ packages_linux:
 
   xfce:
     - catfish
+    - ffmpegthumbnailer
+    - mugshot
     #- xfburn
     - thunar-archive-plugin
     - thunar-media-tags-plugin
