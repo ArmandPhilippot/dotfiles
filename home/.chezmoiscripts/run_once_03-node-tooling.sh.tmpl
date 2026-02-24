@@ -8,9 +8,6 @@ set -euo pipefail
 echo "==> Node tooling setup"
 
 if command -v npm >/dev/null 2>&1; then
-  echo "-> Enabling corepack"
-  npm install --global corepack@latest
-
   if command -v corepack >/dev/null 2>&1; then
     echo "-> Enabling pnpm via corepack"
     corepack enable pnpm
@@ -18,7 +15,7 @@ if command -v npm >/dev/null 2>&1; then
 
   echo "[TODO] After first initialization, run: nvm install --lts"
 else
-  echo "-> npm not found, skipping corepack/pnpm"
+  echo "-> skipping corepack/pnpm"
 fi
 
 echo "==> Node tooling setup done"
