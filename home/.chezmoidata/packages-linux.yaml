@@ -63,6 +63,7 @@ packages_linux:
       distros: ["arch"]
     - speech-dispatcher
     - libreoffice-fresh
+    - libreoffice-fresh-fr
     - name: nextcloud-client
       distros: ["arch"]
     - gnome-keyring # Needed for Nextcloud auto-logging
