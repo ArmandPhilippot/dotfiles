@@ -58,6 +58,7 @@ packages_linux:
   office:
     - alacritty
     - chromium
+    - evince
     - firefox
     - name: firefox-i18n-fr
       distros: ["arch"]
