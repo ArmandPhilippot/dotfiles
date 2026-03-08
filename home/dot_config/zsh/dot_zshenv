@@ -37,6 +37,7 @@ export GPG_TTY=$(tty)
 export BAT_THEME="Coldark-Dark"
 
 # Docker Rootless
+export DOCKER_BIN="${XDG_BIN_HOME}/docker"
 export DOCKER_CONFIG="${XDG_CONFIG_HOME}"/docker
 export DOCKER_HOST="unix://${XDG_RUNTIME_DIR}/docker.sock"
 
@@ -47,7 +48,7 @@ export NVM_LAZY_LOAD=true
 # Force these apps to respect XDG
 # See: https://wiki.archlinux.org/title/XDG_Base_Directory_support#Support
 export CUDA_CACHE_PATH="${XDG_CACHE_HOME}/nv"
-export GOBIN="${XDG_BIN_HOME}"
+export GOBIN="${XDG_BIN_HOME}/go"
 export GOPATH="${XDG_DATA_HOME}/go"
 export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
 export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
