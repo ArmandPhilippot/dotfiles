@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
 <action>
-	<icon>alacritty</icon>
+	<icon>Alacritty</icon>
 	<name>Ouvrir dans le terminal</name>
 	<submenu></submenu>
 	<unique-id>1750082138126693-1</unique-id>
