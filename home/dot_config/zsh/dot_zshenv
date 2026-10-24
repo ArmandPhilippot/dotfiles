@@ -45,6 +45,10 @@ export DOCKER_HOST="unix://${XDG_RUNTIME_DIR}/docker.sock"
 export NVM_DIR="${XDG_DATA_HOME}/nvm"
 export NVM_LAZY_LOAD=true
 
+# Rust
+export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
+export CARGO_HOME="${XDG_DATA_HOME}/cargo"
+
 # Force these apps to respect XDG
 # See: https://wiki.archlinux.org/title/XDG_Base_Directory_support#Support
 export CUDA_CACHE_PATH="${XDG_CACHE_HOME}/nv"
